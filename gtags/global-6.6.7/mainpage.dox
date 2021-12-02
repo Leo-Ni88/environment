@@ -1,0 +1,42 @@
+/**
+@mainpage GNU Global source code tagging system
+@verbatim
+___________________________________
+|      |  |  |     |  _  |     |  |
+|  |___|  |  |  |  |    _|  |  |  |    GNU GLOBAL source code tagging system
+|  |   |  |  |  |  |     |     |  |
+|  ~~  |   ~~|     |  ~  |  |  |   ~~|          for all hackers.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@endverbatim
+
+GNU Global is a source code tagging system that works the same way across diverse
+environments. It supports C, Yacc, Java, PHP4 and assembly source code.
+
+@section s1 The main() files
+
+	@ref global.c "global.c -- print locations of the specified object."
+
+	@ref gozilla.c "gozilla.c -- force mozilla browser to display specified part of a source file."
+
+	@ref gtags.c "gtags.c -- create tag files for global."
+
+	@ref gtags-cscope.c "gtags-cscope.c -- interactive C symbol cross-reference (cscope)."
+
+	@ref htags.c "htags.c -- generate hypertext (XHTML or HTML) pages from a set of source files."
+
+	Click on the Files button above, to see all the source files documented by Doxygen.
+
+@section s2 Documentation
+
+	Please see "doc/global.texi" (texinfo format) to know how to use Global.
+	You can see it even on Global's web site:
+
+	"http://www.gnu.org/software/global/globaldoc_toc.html"
+	"http://www.gnu.org/software/global/manual/"
+
+@section s3 Latest information
+
+	You can see the latest information on Global's web site.
+
+	"http://www.gnu.org/software/global/whatsnew.html"
+*/

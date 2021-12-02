@@ -1,0 +1,5 @@
+{
+  "clangd.disableCompletion":false,
+  "clangd.disableSnippetCompletion":false,
+  "clangd.disableDiagnostics":true
+}
