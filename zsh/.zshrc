@@ -97,8 +97,8 @@ plugins=(git autojump zsh-autosuggestions zsh-syntax-highlighting fzf)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-export PATH=$PATH:/home/leo/workspace/github/diff-so-fancy
-export PATH=$PATH:/home/leo/.bin/
+export PATH=$PATH:~/diff-so-fancy
+export PATH=$PATH:~/.bin/
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # use cross compile

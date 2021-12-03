@@ -14,4 +14,5 @@ npm install -g neovim
 pip install pygments
 
 
-
+# Coc Plugins
+#:CocInstall coc-marketplace coc-json coc-tsserver coc-clangd coc-pairs coc-git coc-highlight coc-snippets
