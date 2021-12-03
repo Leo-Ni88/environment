@@ -1,4 +1,4 @@
-# environment
+#ENVIRONMENTS
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install net-tools git make curl ssh zsh autojump vim neovim tmux tig fzf clangd \
@@ -13,6 +13,8 @@ sudo apt-get install python python3-pip
 npm install -g neovim
 pip install pygments
 
+#INSTALL
+./stash.sh
 
 # Coc Plugins
 #:CocInstall coc-marketplace coc-json coc-tsserver coc-clangd coc-pairs coc-git coc-highlight coc-snippets
