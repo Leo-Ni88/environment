@@ -1,58 +1,86 @@
-" File              : .vimrc
+" /home/leo/.config/nvim/init.vim
+" Copyright (c) 2021 jni <jni@bouffalolab.com>
+"
+" This program is free software: you can redistribute it and/or modify
+" it under the terms of the GNU Affero General Public License as
+" published by the Free Software Foundation, either version 3 of the
+" License, or (at your option) any later version.
+"
+" This program is distributed in the hope that it will be useful,
+" but WITHOUT ANY WARRANTY; without even the implied warranty of
+" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+" GNU Affero General Public License for more details.
+"
+" You should have received a copy of the GNU Affero General Public License
+" along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"
+" File              : init.vim
 " Author            : jni <jni@bouffalolab.com>
-" Date              : 28.09.2021
-" Last Modified Date: 18.11.2021
+" Date              : 16.12.2021
+" Last Modified Date: 16.12.2021
 " Last Modified By  : jni <jni@bouffalolab.com>
-
 call plug#begin('~/.config/nvim/plugged')
-"Plug 'junegunn/vim-easy-align'
+Plug 'altercation/vim-colors-solarized'
+Plug 'sainnhe/sonokai'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'morhetz/gruvbox'
-Plug 'altercation/vim-colors-solarized'
-"Plug 'ntpeters/vim-better-whitespace'
 Plug 'rhysd/vim-clang-format'
 Plug 'alpertuna/vim-header'
-"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-"Plug 'junegunn/fzf.vim'
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'machakann/vim-highlightedyank'
 Plug 'lfv89/vim-interestingwords'
-"Plug 'mhinz/vim-signify'
-Plug 'octol/vim-cpp-enhanced-highlight'
-"Plug 'jiangmiao/auto-pairs'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'p00f/nvim-ts-rainbow'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'honza/vim-snippets'
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'jiangmiao/auto-pairs'
+Plug 'yamatsum/nvim-cursorline'
+"Plug 'morhetz/gruvbox'
+"Plug 'ntpeters/vim-better-whitespace'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'machakann/vim-highlightedyank'
+"Plug 'octol/vim-cpp-enhanced-highlight'
+"Plug 'mhinz/vim-signify'
 call plug#end()
 
 
-syntax enable
+" 主题
+"The configuration options should be placed before colorscheme sonokai
 set background=dark
-" set background=light
 
-colorscheme solarized
-let g:solarized_termcolors=256
-let g:solarized_termtrans=1
+let g:sonokai_style = 'maia'
+"let g:sonokai_style = 'espresso'
+let g:sonokai_enable_italic = 0
+let g:sonokai_disable_italic_comment = 1
+colorscheme sonokai
 
+"let g:solarized_termcolors=256
+"let g:solarized_termtrans=1
+"colorscheme solarized
+
+" let g:gruvbox_material_statusline_style = 'mix'
+" let g:gruvbox_material_background = 'hard'
+" let g:gruvbox_material_enable_italic = 0
+" let g:gruvbox_material_disable_italic_comment = 1
 " colorscheme gruvbox
 
-" if has("termguicolors")
-    " enable true color
-    " set termguicolors
-" endif
+" true colors. Important!! not friendly to solarized
+if has('termguicolors')
+  set termguicolors
+endif
 
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let g:cpp_posix_standard = 1
-" let g:cpp_experimental_simple_template_highlight = 1
-" let g:cpp_experimental_template_highlight = 1
-" let g:cpp_concepts_highlight = 1
-let g:cpp_no_function_highlight = 0
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_theme = 'sonokai'
+"let g:airline_theme = 'angr'
+"let g:airline_theme = 'dracula'
 
-" Spaces & Tabs {{{
+
+syntax enable
+" Spaces & Tabs config
 set tabstop=2       " number of visual spaces per TAB
 set softtabstop=2   " number of spaces in tab when editing
 set shiftwidth=2    " number of spaces to use for autoindent
@@ -60,16 +88,14 @@ set expandtab       " tabs are space
 set autoindent
 set copyindent      " copy indent from the previous line
 set whichwrap=b,s,h,l,<,>,[,]   " 左右移动可跨行
-" }}} Spaces & Tabs
 
-" Clipboard {{{
+" Clipboard 
 set clipboard+=unnamedplus
-" }}} Clipboard
 
-" UI Config {{{
+" UI Config
 set hidden
 set number                   " show line number
-set relativenumber           " show relative line number
+"set relativenumber           " show relative line number
 set showcmd                  " show command in bottom bar
 set cursorline               " highlight current line
 set cursorcolumn             " highlight current colume
@@ -83,20 +109,28 @@ set nowrap
 set mouse=v                  " only enable mouse in visual mode
 set scrolloff=12
 set updatetime=100           " for signify plug
+let g:cursorline_timeout = 10
 " let &colorcolumn="78"
-" }}} UI Config
 
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-"xmap ga <Plug>(EasyAlign)
+" auto highlight_current_word
+"augroup highlight_current_word
+"  au!
+"  au CursorHold * :exec 'match Search /\V\<' . expand('<cword>') . '\>/'
+"  setl updatetime=5
+"augroup END
 
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-"nmap ga <Plug>(EasyAlign)
+" Quick quit command && chunk jump
+noremap <Leader>q :q<CR>
+noremap <Leader>Q :qa!<CR>
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
 
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline_theme = 'angr'
-"let g:airline_theme = 'dracula'
+" 打开自动定位到最后编辑的位置, 需要确认 .viminfo 当前用户可写
+if has("autocmd")
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 let g:clang_format#command = "clang-format"
 let g:clang_format#code_style = "llvm"
@@ -108,9 +142,6 @@ let g:header_field_author = 'jni'
 let g:header_field_author_email = 'jni@bouffalolab.com'
 let g:header_auto_add_header = 0
 
-" vim-better-whitespace
-"let g:better_whitespace_enabled = 1
-"let g:strip_whitespace_on_save = 1
 
 if has("cscope")
 
@@ -165,15 +196,6 @@ if has("cscope")
     map <F5> :!cscope -Rbqk<CR>:cs reset<CR><CR>
 endif
 
-" Use deoplete.
-"let g:deoplete#enable_at_startup = 1
-
-" FZF
-"let g:fzf_layout = { 'down': '40%' }
-
-" key bind
-"noremap <leader>fz :Files<CR>
-"noremap <leader>fb :Buffers<CR>
 
 " Buffer key bind
 noremap <leader>bp :bp<CR>
@@ -184,12 +206,6 @@ noremap <leader>bd :bd<CR>
 noremap <leader>tn :tabnext<CR>
 noremap <leader>tp :tabprev<CR>
 
-" skywind3000/asyncrun.vim
-" let g:asyncrun_open = 15        " 自动打开 quickfix window ，高度为 6
-" let g:asyncrun_bell = 1         " 任务结束时候响铃提醒
-
-" 设置 F9 打开/关闭 Quickfix 窗口
-"nnoremap <F9> :call asyncrun#quickfix_toggle(6)<cr>
 
 " InterestingWords config
 let g:interestingWordsGUIColors = ['#8CCBEA', '#A4E57E', '#FFDB72', '#FF7272', '#FFB3FF', '#9999FF']  " GUI colors
@@ -298,8 +314,14 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+highlight HighlightedyankRegion guifg=#282828 guibg=#d79921 
+"cterm=bold gui=bold ctermbg=0 guibg=#13354A
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
+"autocmd CursorHold * silent call CocActionAsync('highlight')
+"highlight CurrentWord ctermfg=235 ctermbg=107 guifg=#273136 guibg=#a2e57b
+"highlight CurrentWord ctermfg=110 ctermbg=237 guifg=#78cee9 guibg=#414b53
+"highlight cursorline ctermbg=246 guibg=#82878b
+"highlight cursorcolumn ctermbg=246 guibg=#82878b
 autocmd FileType tex let b:coc_pairs = [["$", "$"]]
 
 " Use <C-l> for trigger snippet expand.
@@ -320,3 +342,31 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)
 
+
+
+lua <<EOF
+  --nvim-treesitter
+  require'nvim-treesitter.configs'.setup {
+    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    git = {
+      ignore = 0
+    },
+    highlight = {
+      enable = true,              -- false will disable the whole extension
+      -- disable = { "c", "rust" },  -- list of language that will be disabled
+      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+      -- Using this option may slow down your editor, and you may see some duplicate highlights.
+      -- Instead of true it can also be a list of languages
+      additional_vim_regex_highlighting = false,
+    },
+    rainbow = {
+        enable = true,
+        -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+        extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+        max_file_lines = nil, -- Do not enable for files with more than n lines, int
+        -- colors = {}, -- table of hex strings
+        -- termcolors = {} -- table of colour name strings
+    },
+  }
+EOF
