@@ -20,7 +20,6 @@
 " Last Modified Date: 16.12.2021
 " Last Modified By  : jni <jni@bouffalolab.com>
 call plug#begin('~/.config/nvim/plugged')
-Plug 'altercation/vim-colors-solarized'
 Plug 'sainnhe/sonokai'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -35,6 +34,7 @@ Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'jiangmiao/auto-pairs'
 Plug 'yamatsum/nvim-cursorline'
+"Plug 'altercation/vim-colors-solarized'
 "Plug 'morhetz/gruvbox'
 "Plug 'ntpeters/vim-better-whitespace'
 "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -79,7 +79,7 @@ let g:airline_theme = 'sonokai'
 "let g:airline_theme = 'dracula'
 
 
-syntax enable
+"syntax on
 " Spaces & Tabs config
 set tabstop=2       " number of visual spaces per TAB
 set softtabstop=2   " number of spaces in tab when editing
@@ -95,7 +95,7 @@ set clipboard+=unnamedplus
 " UI Config
 set hidden
 set number                   " show line number
-"set relativenumber           " show relative line number
+set relativenumber           " show relative line number
 set showcmd                  " show command in bottom bar
 set cursorline               " highlight current line
 set cursorcolumn             " highlight current colume
@@ -108,7 +108,7 @@ set noswapfile
 set nowrap
 set mouse=v                  " only enable mouse in visual mode
 set scrolloff=12
-set updatetime=100           " for signify plug
+set updatetime=10           " for signify plug
 let g:cursorline_timeout = 10
 " let &colorcolumn="78"
 
@@ -127,11 +127,13 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
-" 打开自动定位到最后编辑的位置, 需要确认 .viminfo 当前用户可写
+" jump to the last position when
 if has("autocmd")
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+"autocmd FileType c ClangFormatAutoEnable
+noremap <F3> :ClangFormat<CR>
 let g:clang_format#command = "clang-format"
 let g:clang_format#code_style = "llvm"
 let g:clang_format#style_options = {
