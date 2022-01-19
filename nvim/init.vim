@@ -25,6 +25,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'rhysd/vim-clang-format'
 Plug 'alpertuna/vim-header'
+Plug 'numToStr/Comment.nvim'
 Plug 'lfv89/vim-interestingwords'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'p00f/nvim-ts-rainbow'
@@ -359,7 +360,10 @@ xmap <leader>x  <Plug>(coc-convert-snippet)
 
 
 lua <<EOF
-  --nvim-treesitter
+  -- comment
+  require('Comment').setup()
+
+  -- nvim-treesitter
   require'nvim-treesitter.configs'.setup {
     ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     git = {
