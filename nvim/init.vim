@@ -233,7 +233,7 @@ let g:Lf_IgnoreCurrentBufferName = 1
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
-let g:Lf_PreviewResult = {'Function': 1, 'BufTag': 1, 'File': 0, 'Buffer': 1, 'Mru': 0, 'Line': 0, 'Gtags': 1 }
+let g:Lf_PreviewResult = {'Function': 1, 'BufTag': 1, 'File': 0, 'Buffer': 1, 'Mru': 0, 'Line': 1, 'Gtags': 1, 'Rg':1}
 let g:Lf_PopupPreviewPosition = 'top'
 
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
@@ -257,6 +257,17 @@ noremap <leader>fw :LeaderfWindow<cr>
 nmap <unique> <leader>fs <Plug>LeaderfGtagsSymbol
 nmap <unique> <leader>fg <Plug>LeaderfGtagsGrep
 
+"LeaderF rg map
+nmap <unique> <leader>fgi <Plug>LeaderfRgPrompt
+nmap <unique> <leader>fga <Plug>LeaderfRgCwordLiteralNoBoundary
+nmap <unique> <leader>fgb <Plug>LeaderfRgCwordLiteralBoundary
+nmap <unique> <leader>fgc <Plug>LeaderfRgCwordRegexNoBoundary
+nmap <unique> <leader>fgd <Plug>LeaderfRgCwordRegexBoundary
+
+vmap <unique> <leader>fga <Plug>LeaderfRgVisualLiteralNoBoundary
+vmap <unique> <leader>fgb <Plug>LeaderfRgVisualLiteralBoundary
+vmap <unique> <leader>fgc <Plug>LeaderfRgVisualRegexNoBoundary
+vmap <unique> <leader>fgd <Plug>LeaderfRgVisualRegexBoundary
 
 " should use `Leaderf gtags --update` first
 let g:Lf_GtagsAutoGenerate = 0
@@ -266,6 +277,7 @@ let g:Lf_GtagsSource = 1
 let g:Lf_Gtagsconf = '/usr/local/share/gtags/gtags.conf'
 let g:Lf_Gtagslabel = 'native-pygments'
 
+"LeaderF gtags
 noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
 noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
 noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
