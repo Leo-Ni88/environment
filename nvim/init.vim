@@ -1,5 +1,5 @@
-" /home/leo/.config/nvim/init.vim
-" Copyright (c) 2021 jni <jni@bouffalolab.com>
+" nvim/init.vim
+" Copyright (c) 2022 jni <jni@bouffalolab.com>
 "
 " This program is free software: you can redistribute it and/or modify
 " it under the terms of the GNU Affero General Public License as
@@ -16,8 +16,8 @@
 "
 " File              : init.vim
 " Author            : jni <jni@bouffalolab.com>
-" Date              : 16.12.2021
-" Last Modified Date: 16.12.2021
+" Date              : 20.01.2022
+" Last Modified Date: 20.01.2022
 " Last Modified By  : jni <jni@bouffalolab.com>
 call plug#begin('~/.config/nvim/plugged')
 Plug 'sainnhe/sonokai'
@@ -258,17 +258,24 @@ noremap <leader>fw :LeaderfWindow<cr>
 nmap <unique> <leader>fs <Plug>LeaderfGtagsSymbol
 nmap <unique> <leader>fg <Plug>LeaderfGtagsGrep
 
-"LeaderF rg map
-nmap <unique> <leader>fgi <Plug>LeaderfRgPrompt
-nmap <unique> <leader>fga <Plug>LeaderfRgCwordLiteralNoBoundary
-nmap <unique> <leader>fgb <Plug>LeaderfRgCwordLiteralBoundary
-nmap <unique> <leader>fgc <Plug>LeaderfRgCwordRegexNoBoundary
-nmap <unique> <leader>fgd <Plug>LeaderfRgCwordRegexBoundary
+" LeaderF Rg config
+let g:Lf_RgConfig = [
+    \ "--max-columns=150",
+    \ "--glob=!node_modules/*",
+    \ "--glob=!dist/*",
+    \ ]
 
-vmap <unique> <leader>fga <Plug>LeaderfRgVisualLiteralNoBoundary
-vmap <unique> <leader>fgb <Plug>LeaderfRgVisualLiteralBoundary
-vmap <unique> <leader>fgc <Plug>LeaderfRgVisualRegexNoBoundary
-vmap <unique> <leader>fgd <Plug>LeaderfRgVisualRegexBoundary
+"LeaderF rg map
+nmap <unique> <leader>gi <Plug>LeaderfRgPrompt
+nmap <unique> <leader>ga <Plug>LeaderfRgCwordLiteralNoBoundary
+nmap <unique> <leader>gb <Plug>LeaderfRgCwordLiteralBoundary
+nmap <unique> <leader>gc <Plug>LeaderfRgCwordRegexNoBoundary
+nmap <unique> <leader>gd <Plug>LeaderfRgCwordRegexBoundary
+
+vmap <unique> <leader>ga <Plug>LeaderfRgVisualLiteralNoBoundary
+vmap <unique> <leader>gb <Plug>LeaderfRgVisualLiteralBoundary
+vmap <unique> <leader>gc <Plug>LeaderfRgVisualRegexNoBoundary
+vmap <unique> <leader>gd <Plug>LeaderfRgVisualRegexBoundary
 
 " should use `Leaderf gtags --update` first
 let g:Lf_GtagsAutoGenerate = 0
