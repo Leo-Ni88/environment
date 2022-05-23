@@ -1,14 +1,5 @@
-" nvim/init.vim
-" Copyright (c) 2022 jni <jni@bouffalolab.com>
-"
-" This program is free software: you can redistribute it and/or modify
-" it under the terms of the GNU Affero General Public License as
-" published by the Free Software Foundation, either version 3 of the
-" License, or (at your option) any later version.
-"
-" This program is distributed in the hope that it will be useful,
-" but WITHOUT ANY WARRANTY; without even the implied warranty of
-" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+" /home/leo/.config/nvim/init.vim
+" Copyright (c) 2021 jni <jni@bouffalolab.com>
 " GNU Affero General Public License for more details.
 "
 " You should have received a copy of the GNU Affero General Public License
@@ -16,8 +7,8 @@
 "
 " File              : init.vim
 " Author            : jni <jni@bouffalolab.com>
-" Date              : 20.01.2022
-" Last Modified Date: 20.01.2022
+" Date              : 16.12.2021
+" Last Modified Date: 16.12.2021
 " Last Modified By  : jni <jni@bouffalolab.com>
 call plug#begin('~/.config/nvim/plugged')
 Plug 'sainnhe/sonokai'
@@ -30,16 +21,20 @@ Plug 'lfv89/vim-interestingwords'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'p00f/nvim-ts-rainbow'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'airblade/vim-rooter'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'jiangmiao/auto-pairs'
 Plug 'yamatsum/nvim-cursorline'
+Plug 'chrisbra/vim-diff-enhanced'
+Plug 'mhinz/vim-startify'
+" Plug 'ap/vim-css-color'
 "Plug 'altercation/vim-colors-solarized'
 "Plug 'morhetz/gruvbox'
 "Plug 'ntpeters/vim-better-whitespace'
-"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-"Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'machakann/vim-highlightedyank'
 "Plug 'octol/vim-cpp-enhanced-highlight'
@@ -79,12 +74,13 @@ let g:airline_theme = 'sonokai'
 "let g:airline_theme = 'angr'
 "let g:airline_theme = 'dracula'
 
+let g:startify_files_number = 15
 
 "syntax on
 " Spaces & Tabs config
-set tabstop=2       " number of visual spaces per TAB
-set softtabstop=2   " number of spaces in tab when editing
-set shiftwidth=2    " number of spaces to use for autoindent
+set tabstop=4       " number of visual spaces per TAB
+set softtabstop=4   " number of spaces in tab when editing
+set shiftwidth=4    " number of spaces to use for autoindent
 set expandtab       " tabs are space
 set autoindent
 set copyindent      " copy indent from the previous line
@@ -107,9 +103,10 @@ set laststatus=2             " window will always have a status line
 set nobackup
 set noswapfile
 set nowrap
-set mouse=v                  " only enable mouse in visual mode
+set mouse=n                  " enable mouse in Nomal mode
 set scrolloff=12
 set updatetime=10           " for signify plug
+set nofsync
 let g:cursorline_timeout = 10
 " let &colorcolumn="78"
 
@@ -136,7 +133,8 @@ endif
 "autocmd FileType c ClangFormatAutoEnable
 noremap <F3> :ClangFormat<CR>
 let g:clang_format#command = "clang-format"
-let g:clang_format#code_style = "llvm"
+" let g:clang_format#code_style = "llvm"
+let g:clang_format#code_style = "google"
 let g:clang_format#style_options = {
             \ "ColumnLimit" : 0,
             \ "SortIncludes": "false"}
@@ -220,10 +218,36 @@ let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
 let g:AutoPairsMapCR = 4
 let g:AutoPairsMapSpace = 1
 
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FZF
+" nmap <C-P> :Files<CR>
+noremap <leader>ff :Files<cr>
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+" Enable per-command history
+" - History files will be stored in the specified directory
+" - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+"   'previous-history' instead of 'down' and 'up'.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " LeaderF
 " don't show the help in normal mode
+" let g:Lf_ShortcutF = '<C-P>'
 let g:Lf_HideHelp = 1
 let g:Lf_FollowLinks = 1
 let g:Lf_ShowHidden = 1
@@ -234,16 +258,40 @@ let g:Lf_IgnoreCurrentBufferName = 1
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
-let g:Lf_PreviewResult = {'Function': 1, 'BufTag': 1, 'File': 0, 'Buffer': 1, 'Mru': 0, 'Line': 1, 'Gtags': 1, 'Rg':1}
+let g:Lf_PreviewResult = {'Function': 1, 'BufTag': 0, 'File': 0, 'Buffer': 0, 'Mru': 0, 'Line': 0, 'Gtags': 1, 'Rg':0}
 let g:Lf_PopupPreviewPosition = 'top'
 
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
 let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_DefaultExternalTool='rg'
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_ShowRelativePath = 0
 let g:Lf_StlColorscheme = 'powerline'
+" let g:Lf_CommandMap = {'<C-Up>': ['<C-n>']}
 "let g:Lf_PopupWidth = 0.95
 "let g:Lf_WindowHeight = 0.30
+" let g:Lf_PopupPalette = {
+"    \  'light': {
+"    \      'Lf_hl_cursorline': {
+"    \                'gui': 'reverse',
+"    \                'font': 'NONE',
+"    \                'guifg': '#273136',
+"    \                'guibg': '#78cee9',
+"    \                'cterm': '235',
+"    \                'ctermfg': '110',
+"    \                'ctermbg': '236'
+"    \              },
+"    \      'Lf_hl_match': {
+"    \                'gui': 'NONE',
+"    \                'font': 'NONE',
+"    \                'guifg': 'NONE',
+"    \                'guibg': '#303136',
+"    \                'cterm': 'NONE',
+"    \                'ctermfg': 'NONE',
+"    \                'ctermbg': '236'
+"    \              },
+"    \      }
+"    \  }
 
 "let g:Lf_ShortcutF = "<leader>ff"
 noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
@@ -251,8 +299,8 @@ noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
 noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 
-noremap <leader>f :LeaderfSelf<cr>
-noremap <leader>ff :LeaderfFile<cr>
+" noremap <leader>f :LeaderfSelf<cr>
+noremap <leader>f :LeaderfFile<cr>
 noremap <leader>fc :LeaderfFunction<cr>
 noremap <leader>fw :LeaderfWindow<cr>
 nmap <unique> <leader>fs <Plug>LeaderfGtagsSymbol
@@ -293,6 +341,8 @@ noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 
 
+let g:rooter_patterns = ['.git/']
+let g:rooter_silent_chdir = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "ctags auto load tags
 set tags=./.tags;,.tags
@@ -317,6 +367,13 @@ endif
 " 将自动生成的 ctags/gtags 文件全部放入 ~/.cache/tags
 " 目录中，避免污染工程目录
 let g:gutentags_cache_dir = expand(g:Lf_CacheDirectory.'/.LfCache/gtags')
+let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
+
+let g:gutentags_background_update = 0
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
 
 " 配置 ctags 的参数，老的 Exuberant-ctags 不能有 --extra=+q，注意
 let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
@@ -328,6 +385,30 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 " 禁用 gutentags 自动加载 gtags 数据库的行为
 let g:gutentags_auto_add_gtags_cscope = 0
+
+let g:gutentags_ctags_exclude = [
+\  '*.git', '*.svn', '*.hg',
+\  'cache', 'build', 'dist', 'bin', 'node_modules', 'bower_components',
+\  '*-lock.json',  '*.lock',
+\  '*.min.*',
+\  '*.bak',
+\  '*.zip',
+\  '*.pyc',
+\  '*.class',
+\  '*.sln',
+\  '*.csproj', '*.csproj.user',
+\  '*.tmp',
+\  '*.cache',
+\  '*.vscode',
+\  '*.pdb',
+\  '*.exe', '*.dll', '*.bin',
+\  '*.mp3', '*.ogg', '*.flac',
+\  '*.swp', '*.swo',
+\  '.DS_Store', '*.plist',
+\  '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png', '*.svg',
+\  '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+\  '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx', '*.xls',
+\]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " coc.nvim config
@@ -365,6 +446,10 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 xmap <leader>x  <Plug>(coc-convert-snippet)
 
 
+" started In Diff-Mode set diffexpr (plugin not loaded yet)
+if &diff
+    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+endif
 
 lua <<EOF
   -- comment
