@@ -10,6 +10,10 @@
 " Date              : 16.12.2021
 " Last Modified Date: 16.12.2021
 " Last Modified By  : jni <jni@bouffalolab.com>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" plugins
 call plug#begin('~/.config/nvim/plugged')
 Plug 'sainnhe/sonokai'
 Plug 'vim-airline/vim-airline'
@@ -44,6 +48,8 @@ Plug 'tpope/vim-endwise'
 call plug#end()
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " 主题
 "The configuration options should be placed before colorscheme sonokai
 set background=dark
@@ -76,9 +82,9 @@ let g:airline_theme = 'sonokai'
 "let g:airline_theme = 'angr'
 "let g:airline_theme = 'dracula'
 
-let g:startify_files_number = 15
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"syntax on
+" regular setting
 " Spaces & Tabs config
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
@@ -104,20 +110,19 @@ set showmatch                " highlight matching brace
 set laststatus=2             " window will always have a status line
 set nobackup
 set noswapfile
-set nowrap
-set mouse=n               " enable mouse in Nomal,Visual,Insert mode
+set wrap
+set mouse=n                  " enable mouse in Nomal,Visual,Insert mode
 set scrolloff=12
-set updatetime=10           " for signify plug
+set updatetime=10            " for signify plug
+set nofsync
+"syntax on
+
 let g:cursorline_timeout = 10
 " let &colorcolumn="78"
 
-" auto highlight_current_word
-"augroup highlight_current_word
-"  au!
-"  au CursorHold * :exec 'match Search /\V\<' . expand('<cword>') . '\>/'
-"  setl updatetime=5
-"augroup END
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" normal key map
 " Quick quit command && chunk jump
 noremap <Leader>q :q<CR>
 noremap <Leader>Q :qa!<CR>
@@ -126,12 +131,40 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+" Buffer key bind
+noremap <leader>bp :bp<CR>
+noremap <leader>bn :bn<CR>
+noremap <leader>bd :bd<CR>
+
+" Tab key bind
+noremap <leader>tn :tabnext<CR>
+noremap <leader>tp :tabprev<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" auto cmd
 " jump to the last position when
 if has("autocmd")
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+" auto highlight_current_word
+"augroup highlight_current_word
+"  au!
+"  au CursorHold * :exec 'match Search /\V\<' . expand('<cword>') . '\>/'
+"  setl updatetime=5
+"augroup END
+
 "autocmd FileType c ClangFormatAutoEnable
+
+" started In Diff-Mode set diffexpr (plugin not loaded yet)
+if &diff
+    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" rhysd/vim-clang-format
 noremap <F3> :ClangFormat<CR>
 let g:clang_format#command = "clang-format"
 " let g:clang_format#code_style = "llvm"
@@ -144,7 +177,9 @@ let g:header_field_author = 'jni'
 let g:header_field_author_email = 'jni@bouffalolab.com'
 let g:header_auto_add_header = 0
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"cscope
 if has("cscope")
 
     """"""""""""" Standard cscope/vim boilerplate
@@ -198,18 +233,9 @@ if has("cscope")
     map <F5> :!cscope -Rbqk<CR>:cs reset<CR><CR>
 endif
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Buffer key bind
-noremap <leader>bp :bp<CR>
-noremap <leader>bn :bn<CR>
-noremap <leader>bd :bd<CR>
-
-" Tab key bind
-noremap <leader>tn :tabnext<CR>
-noremap <leader>tp :tabprev<CR>
-
-
-" InterestingWords config
+" lfv89/vim-interestingwords
 let g:interestingWordsGUIColors = ['#8CCBEA', '#A4E57E', '#FFDB72', '#FF7272', '#FFB3FF', '#9999FF']  " GUI colors
 let g:interestingWordsRandomiseColors = 1  " random colors
 nnoremap <F8> :call InterestingWords('n')<cr>
@@ -220,8 +246,8 @@ let g:AutoPairsMapCR = 4
 let g:AutoPairsMapSpace = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FZF
-" nmap <C-P> :Files<CR>
+
+" junegunn/fzf
 noremap <leader>ff :Files<cr>
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 " Customize fzf colors to match your color scheme
@@ -245,8 +271,10 @@ let g:fzf_colors =
 " - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
 "   'previous-history' instead of 'down' and 'up'.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" LeaderF
+
+" Yggdroot/LeaderF
 " don't show the help in normal mode
 " let g:Lf_ShortcutF = '<C-P>'
 let g:Lf_HideHelp = 1
@@ -342,9 +370,15 @@ noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
 noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"airblade/vim-rooter
 let g:rooter_patterns = ['.git/']
 let g:rooter_silent_chdir = 1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" ludovicchabant/vim-gutentags
 "ctags auto load tags
 set tags=./.tags;,.tags
 
@@ -412,7 +446,8 @@ let g:gutentags_ctags_exclude = [
 \]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" coc.nvim config
+
+" neoclide/coc.nvim
 " Use <Tab> and <S-Tab> to navigate the completion list
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -446,17 +481,22 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " Use <leader>x for convert visual selected code to snippet
 " xmap <leader>x  <Plug>(coc-convert-snippet)
 
-"easymotion
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" easymotion/vim-easymotion
 " 使用 ss 启用
 nmap <leader>s <Plug>(easymotion-s2)
 " JK motions: Line motions
 " map <leader>j <Plug>(easymotion-j)
 " map <leader>k <Plug>(easymotion-k)
 
-" started In Diff-Mode set diffexpr (plugin not loaded yet)
-if &diff
-    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
-endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" mhinz/vim-startify
+let g:startify_files_number = 15
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 lua <<EOF
   -- comment
@@ -487,3 +527,5 @@ lua <<EOF
     },
   }
 EOF
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
