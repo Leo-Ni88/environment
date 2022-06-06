@@ -39,6 +39,8 @@ Plug 'junegunn/fzf.vim'
 "Plug 'machakann/vim-highlightedyank'
 "Plug 'octol/vim-cpp-enhanced-highlight'
 "Plug 'mhinz/vim-signify'
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-endwise'
 call plug#end()
 
 
@@ -103,10 +105,9 @@ set laststatus=2             " window will always have a status line
 set nobackup
 set noswapfile
 set nowrap
-set mouse=n                  " enable mouse in Nomal mode
+set mouse=n               " enable mouse in Nomal,Visual,Insert mode
 set scrolloff=12
 set updatetime=10           " for signify plug
-set nofsync
 let g:cursorline_timeout = 10
 " let &colorcolumn="78"
 
@@ -443,8 +444,14 @@ let g:coc_snippet_prev = '<c-k>'
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
+" xmap <leader>x  <Plug>(coc-convert-snippet)
 
+"easymotion
+" 使用 ss 启用
+nmap <leader>s <Plug>(easymotion-s2)
+" JK motions: Line motions
+" map <leader>j <Plug>(easymotion-j)
+" map <leader>k <Plug>(easymotion-k)
 
 " started In Diff-Mode set diffexpr (plugin not loaded yet)
 if &diff
