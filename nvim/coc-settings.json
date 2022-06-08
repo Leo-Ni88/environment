@@ -1,5 +1,6 @@
 {
   "clangd.disableCompletion":false,
   "clangd.disableSnippetCompletion":false,
-  "clangd.disableDiagnostics":true
+  "clangd.disableDiagnostics":true,
+  "coc.preferences.colorSupport": true
 }
