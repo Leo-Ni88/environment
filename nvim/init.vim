@@ -20,6 +20,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'rhysd/vim-clang-format'
 Plug 'alpertuna/vim-header'
 Plug 'numToStr/Comment.nvim'
@@ -77,6 +78,8 @@ if has('termguicolors')
   set termguicolors
 endif
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " vim-airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 0
@@ -85,12 +88,21 @@ let g:airline_theme = 'sonokai'
 "let g:airline_theme = 'angr'
 "let g:airline_theme = 'dracula'
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " bufferline.nvim
 " These commands will navigate through buffers in order regardless of which mode you are using
 " e.g. if you change the order of buffers :bnext and :bprevious will not respect the custom ordering
 nnoremap <silent>b] :BufferLineCycleNext<CR>
 nnoremap <silent>b[ :BufferLineCyclePrev<CR>
 nnoremap <silent><leader>bb :BufferLinePick<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" kyazdani42/nvim-tree.lua
+nnoremap <leader>ee :NvimTreeToggle<CR>
+nnoremap <leader>er :NvimTreeRefresh<CR>
+nnoremap <leader>en :NvimTreeFindFile<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -596,7 +608,7 @@ lua <<EOF
           return true
         end
       end,
-      -- offsets = {{filetype = "NvimTree", text = "File Explorer" , highlight = "Directory", text_align = "left"}},
+      offsets = {{filetype = "NvimTree", text = "File Explorer" , highlight = "Directory", text_align = "left"}},
       color_icons = true, -- whether or not to add the filetype icon highlights
       show_buffer_icons = true, -- disable filetype icons for buffers
       show_buffer_close_icons = true,
@@ -615,7 +627,11 @@ lua <<EOF
         -- return buffer_a.modified > buffer_b.modified
       -- end
     }
-}
+  }
+
+  -- NvimTree
+  -- empty setup using defaults: add your own options
+  require'nvim-tree'.setup {}
 EOF
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
