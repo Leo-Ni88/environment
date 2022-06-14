@@ -549,6 +549,20 @@ lua <<EOF
     },
   }
 
+  -- nvim-cursorline
+  require('nvim-cursorline').setup {
+    cursorline = {
+      enable = true,
+      timeout = 1000,
+      number = false,
+    },
+    cursorword = {
+      enable = true,
+      min_length = 3,
+      hl = { underline = true },
+    }
+  }
+
   -- nvim-web-devicons
   require'nvim-web-devicons'.setup{}
 
