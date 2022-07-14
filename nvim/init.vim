@@ -320,28 +320,6 @@ let g:Lf_StlColorscheme = 'powerline'
 " let g:Lf_CommandMap = {'<C-Up>': ['<C-n>']}
 "let g:Lf_PopupWidth = 0.95
 "let g:Lf_WindowHeight = 0.30
-" let g:Lf_PopupPalette = {
-"    \  'light': {
-"    \      'Lf_hl_cursorline': {
-"    \                'gui': 'reverse',
-"    \                'font': 'NONE',
-"    \                'guifg': '#273136',
-"    \                'guibg': '#78cee9',
-"    \                'cterm': '235',
-"    \                'ctermfg': '110',
-"    \                'ctermbg': '236'
-"    \              },
-"    \      'Lf_hl_match': {
-"    \                'gui': 'NONE',
-"    \                'font': 'NONE',
-"    \                'guifg': 'NONE',
-"    \                'guibg': '#303136',
-"    \                'cterm': 'NONE',
-"    \                'ctermfg': 'NONE',
-"    \                'ctermbg': '236'
-"    \              },
-"    \      }
-"    \  }
 
 "let g:Lf_ShortcutF = "<leader>ff"
 noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
