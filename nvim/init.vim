@@ -311,7 +311,7 @@ let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu S
 let g:Lf_PreviewResult = {'Function': 1, 'BufTag': 0, 'File': 0, 'Buffer': 0, 'Mru': 0, 'Line': 0, 'Gtags': 1, 'Rg':0}
 let g:Lf_PopupPreviewPosition = 'top'
 
-let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.repo']
 let g:Lf_WorkingDirectoryMode = 'Ac'
 let g:Lf_DefaultExternalTool='rg'
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
@@ -399,16 +399,20 @@ set tags=./.tags;,.tags
 
 " gutentags
 " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_project_root = ['.root', '.svn', '.repo', '.hg', '.project']
 
 " 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
 
-" 同时开启 ctags 和 gtags 支持：
+" 同时开启 ctags, cscope 和 gtags 支持：
 " 需手动去github下载ctags和gtags源码编译安装
 let g:gutentags_modules = []
 if executable('ctags')
-let g:gutentags_modules += ['ctags']
+" let g:gutentags_modules += ['ctags']
+endif
+if executable('cscope')
+" let g:gutentags_modules += ['cscope']
 endif
 if executable('gtags-cscope') && executable('gtags')
 let g:gutentags_modules += ['gtags_cscope']
@@ -425,14 +429,17 @@ let g:gutentags_generate_on_missing = 1
 let g:gutentags_generate_on_write = 1
 let g:gutentags_generate_on_empty_buffer = 0
 
+" open debug
+" let g:gutentags_define_advanced_commands = 1
+
 " 配置 ctags 的参数，老的 Exuberant-ctags 不能有 --extra=+q，注意
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+" let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+" let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+" let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
 " 如果使用 universal ctags 需要增加下面一行，老的 Exuberant-ctags
 " 不能加下一行
-let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+" let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 " 禁用 gutentags 自动加载 gtags 数据库的行为
 let g:gutentags_auto_add_gtags_cscope = 0
 
