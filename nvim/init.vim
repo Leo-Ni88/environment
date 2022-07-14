@@ -624,14 +624,29 @@ lua <<EOF
   -- NvimTree
   -- empty setup using defaults: add your own options
   require'nvim-tree'.setup {
+    open_on_setup_file = false,
     view = {
       adaptive_size = true,
       side = "left",
     },
     renderer = {
-      highlight_git = true,
-      highlight_opened_files = "true",
-    }
+      -- highlight_git = true,
+      -- highlight_opened_files = "all",
+      git = {
+        unstaged = "✗",
+        staged = "✓",
+        unmerged = "",
+        renamed = "➜",
+        untracked = "★",
+        deleted = "",
+        ignored = "◌",
+      },
+    },
+    git = {
+      enable = true,
+      ignore = true,
+      timeout = 400,
+    },
   }
 EOF
 
