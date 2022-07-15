@@ -632,7 +632,7 @@ lua <<EOF
     },
     renderer = {
       -- highlight_git = true,
-      -- highlight_opened_files = "all",
+      highlight_opened_files = "all",
       git = {
         unstaged = "✗",
         staged = "✓",
