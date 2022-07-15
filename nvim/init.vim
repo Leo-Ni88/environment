@@ -46,7 +46,8 @@ Plug 'junegunn/fzf.vim'
 "Plug 'octol/vim-cpp-enhanced-highlight'
 "Plug 'mhinz/vim-signify'
 Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+
 call plug#end()
 
 
