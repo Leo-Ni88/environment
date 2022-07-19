@@ -22,6 +22,7 @@ Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'rhysd/vim-clang-format'
+Plug 'Leo-Ni88/vim-uncrustify'
 Plug 'alpertuna/vim-header'
 Plug 'numToStr/Comment.nvim'
 Plug 'lfv89/vim-interestingwords'
@@ -198,6 +199,10 @@ let g:clang_format#style_options = {
 let g:header_field_author = 'jni'
 let g:header_field_author_email = 'jni@bouffalolab.com'
 let g:header_auto_add_header = 0
+
+" Leo-Ni88/vim-uncrustify
+autocmd FileType c noremap <buffer> <c-f> :call Uncrustify('c')<CR>
+autocmd FileType c vnoremap <buffer> <c-f> :call RangeUncrustify('c')<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
