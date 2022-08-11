@@ -6,17 +6,22 @@ git submodule update --init --recursive
 sudo /etc/init.d/ssh restart
 
 #install oh-my-zsh
-zsh/oh-my-zsh/install.sh
+# zsh/oh-my-zsh/install.sh
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 
 #zsh themes
-cp -r zsh/themes/* ~/.oh-my-zsh/custom/themes/
+# cp -r zsh/themes/* ~/.oh-my-zsh/custom/themes/
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 #zsh Plugins
-cp -r zsh/plugins/* ~/.oh-my-zsh/custom/plugins/
+# cp -r zsh/plugins/* ~/.oh-my-zsh/custom/plugins/
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 #nvim vim-plug
 cp -r nvim/ ~/.config/
-ln -s ~/.config/nvim/init.vim ~/.vim
+ln -s ~/.config/nvim/init.vim ~/.vimrc
 
 #install nodejs v16.13.0
 nodejs/install-node.sh
