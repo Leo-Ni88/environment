@@ -149,6 +149,9 @@ let g:cursorline_timeout = 10
 " Quick quit command && chunk jump
 noremap <Leader>q :q<CR>
 noremap <Leader>Q :qa!<CR>
+noremap <Leader>w :w<CR>
+noremap <Leader>W :wa<CR>
+noremap <Leader>wq :wq<CR>
 map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
@@ -162,6 +165,9 @@ noremap <leader>bd :bd<CR>
 " Tab key bind
 noremap <leader>tn :tabnext<CR>
 noremap <leader>tp :tabprev<CR>
+
+" no highlight search 
+noremap <leader>nh :nohlsearch<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -637,7 +643,7 @@ lua <<EOF
     },
     renderer = {
       -- highlight_git = true,
-      highlight_opened_files = "all",
+      highlight_opened_files = "name",
       symlink_destination = false,
       git = {
         unstaged = "✗",
@@ -651,8 +657,17 @@ lua <<EOF
     },
     git = {
       enable = true,
-      ignore = true,
+      ignore = false,
       timeout = 400,
+    },
+    log = {
+      enable = true,
+      truncate = true,
+      types = {
+        all = true,
+        profile = true,
+        watcher = true,
+      },
     },
   }
 EOF
