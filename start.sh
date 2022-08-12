@@ -1,21 +1,20 @@
 #!/bin/bash
 
-git submodule update --init --recursive
-
 #restart ssh
 sudo /etc/init.d/ssh restart
 
-#install oh-my-zsh
-# zsh/oh-my-zsh/install.sh
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+git submodule update --init --recursive
 
-#zsh themes
-# cp -r zsh/themes/* ~/.oh-my-zsh/custom/themes/
+#change zsh
+chsh -s /bin/zsh
+
+#install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+#ohmyzsh themes of powerlevel10k
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
-#zsh Plugins
-# cp -r zsh/plugins/* ~/.oh-my-zsh/custom/plugins/
+#ohmyzsh Plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
@@ -48,7 +47,5 @@ cp -r diff-so-fancy ~/.diff-so-fancy
 git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
 git config --global interactive.diffFilter "diff-so-fancy —patch"
 
-#change zsh
-chsh -s /bin/zsh
 
 
