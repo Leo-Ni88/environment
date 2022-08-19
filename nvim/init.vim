@@ -104,6 +104,7 @@ nnoremap <silent><leader>bb :BufferLinePick<CR>
 nnoremap <leader>ee :NvimTreeToggle<CR>
 nnoremap <leader>er :NvimTreeRefresh<CR>
 nnoremap <leader>en :NvimTreeFindFile<CR>
+" highlight NvimTreeOpenedFile guifg=yellow gui=bold
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -646,26 +647,22 @@ lua <<EOF
       side = "left",
     },
     renderer = {
-      -- highlight_git = true,
+      highlight_git = false,
       highlight_opened_files = "name",
       symlink_destination = false,
-      git = {
-        unstaged = "✗",
-        staged = "✓",
-        unmerged = "",
-        renamed = "➜",
-        untracked = "★",
-        deleted = "",
-        ignored = "◌",
-      },
+    },
+    update_focused_file = {
+      enable = true,
+      update_root = false,
+      ignore_list = {},
     },
     git = {
-      enable = true,
+      enable = false,
       ignore = false,
       timeout = 400,
     },
     log = {
-      enable = true,
+      enable = false,
       truncate = true,
       types = {
         all = true,
