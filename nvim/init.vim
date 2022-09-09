@@ -48,7 +48,7 @@ Plug 'junegunn/fzf.vim'
 "Plug 'mhinz/vim-signify'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive'
-
+Plug 'numToStr/FTerm.nvim'
 call plug#end()
 
 
@@ -671,6 +671,14 @@ lua <<EOF
       },
     },
   }
+
+  -- FTerm
+  require'FTerm'.setup{}
+
+  -- keybindings for FTerm
+  vim.keymap.set('n', '<leader>tt', '<CMD>lua require("FTerm").toggle()<CR>')
+  vim.keymap.set('t', '<leader>tt', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+  vim.keymap.set('t', '<leader>te', '<C-\\><C-n><CMD>lua require("FTerm").exit()<CR>')
 EOF
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
