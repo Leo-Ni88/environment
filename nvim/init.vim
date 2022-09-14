@@ -270,9 +270,15 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " lfv89/vim-interestingwords
-let g:interestingWordsGUIColors = ['#8CCBEA', '#A4E57E', '#FFDB72', '#FF7272', '#FFB3FF', '#9999FF']  " GUI colors
-let g:interestingWordsRandomiseColors = 1  " random colors
-nnoremap <leader>h :call InterestingWords('n')<cr>
+let g:interestingWordsGUIColors = ['#8CCBEA', '#A4E57E', '#FFDB72', '#FF7272', '#FFB3FF', '#9999FF']
+let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222']
+let g:interestingWordsRandomiseColors = 1
+
+nnoremap <silent> <leader>h :call InterestingWords('n')<cr>
+vnoremap <silent> <leader>h :call InterestingWords('v')<cr>
+nnoremap <silent> <leader>H :call UncolorAllWords()<cr>
+nnoremap <silent> n :call WordNavigation(1)<cr>
+nnoremap <silent> N :call WordNavigation(0)<cr>
 
 " auto-pair
 let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
