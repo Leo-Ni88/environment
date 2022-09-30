@@ -49,6 +49,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive'
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 call plug#end()
 
 
@@ -288,7 +290,7 @@ let g:AutoPairsMapSpace = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " junegunn/fzf
-noremap <leader>ff :Files<cr>
+noremap <leader>fz :Files<cr>
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 " Customize fzf colors to match your color scheme
 " - fzf#wrap translates this to a set of `--color` options
@@ -350,8 +352,8 @@ noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 noremap <leader>f :LeaderfFile<cr>
 noremap <leader>fc :LeaderfFunction<cr>
 noremap <leader>fw :LeaderfWindow<cr>
-nmap <unique> <leader>fs <Plug>LeaderfGtagsSymbol
-nmap <unique> <leader>fg <Plug>LeaderfGtagsGrep
+" nmap <unique> <leader>fs <Plug>LeaderfGtagsSymbol
+" nmap <unique> <leader>fg <Plug>LeaderfGtagsGrep
 
 " LeaderF Rg config
 let g:Lf_RgConfig = [
@@ -361,16 +363,16 @@ let g:Lf_RgConfig = [
     \ ]
 
 "LeaderF rg map
-nmap <unique> <leader>gi <Plug>LeaderfRgPrompt
-nmap <unique> <leader>ga <Plug>LeaderfRgCwordLiteralNoBoundary
-nmap <unique> <leader>gb <Plug>LeaderfRgCwordLiteralBoundary
-nmap <unique> <leader>gc <Plug>LeaderfRgCwordRegexNoBoundary
-nmap <unique> <leader>gd <Plug>LeaderfRgCwordRegexBoundary
+nmap <unique> <leader>rg <Plug>LeaderfRgPrompt
+nmap <unique> <leader>re <Plug>LeaderfRgCwordRegexNoBoundary
+nmap <unique> <leader>rw <Plug>LeaderfRgCwordRegexBoundary
+nmap <unique> <leader>rt <Plug>LeaderfRgCwordLiteralNoBoundary
+nmap <unique> <leader>ry <Plug>LeaderfRgCwordLiteralBoundary
 
-vmap <unique> <leader>ga <Plug>LeaderfRgVisualLiteralNoBoundary
-vmap <unique> <leader>gb <Plug>LeaderfRgVisualLiteralBoundary
-vmap <unique> <leader>gc <Plug>LeaderfRgVisualRegexNoBoundary
-vmap <unique> <leader>gd <Plug>LeaderfRgVisualRegexBoundary
+vmap <unique> <leader>re <Plug>LeaderfRgVisualRegexNoBoundary
+vmap <unique> <leader>rw <Plug>LeaderfRgVisualRegexBoundary
+vmap <unique> <leader>rt <Plug>LeaderfRgVisualLiteralNoBoundary
+vmap <unique> <leader>ry <Plug>LeaderfRgVisualLiteralBoundary
 
 " should use `Leaderf gtags --update` first
 let g:Lf_GtagsAutoGenerate = 0
@@ -518,6 +520,21 @@ nmap <leader>s <Plug>(easymotion-s2)
 
 " mhinz/vim-startify
 let g:startify_files_number = 15
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" nvim-telescope/telescope.nvim
+" Find files using Telescope command-line sugar.
+" nnoremap <leader>tf <cmd>Telescope find_files<cr>
+" nnoremap <leader>tg <cmd>Telescope live_grep<cr>
+" nnoremap <leader>tb <cmd>Telescope buffers<cr>
+" nnoremap <leader>th <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>tb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>hh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -685,6 +702,9 @@ lua <<EOF
     insert_mappings = false,
     terminal_mappings = true,
   }
+
+  -- nvim-telescope/telescope.nvim
+  require('telescope').setup{}
 EOF
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
