@@ -88,6 +88,8 @@ source $ZSH/oh-my-zsh.sh
 # export PATH="/Users/nijie/tools/diff-so-fancy:$PATH"
 export PATH="/Users/nijie/tools/bin/:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -115,6 +117,11 @@ alias l='exa -abghHl --icons'
 alias vim='nvim'
 alias vi='nvim'
 alias grep='grep --color=auto'
+
+alias bathelp='bat --plain --language=help'
+help() {
+    "$@" --help 2>&1 | bathelp
+}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

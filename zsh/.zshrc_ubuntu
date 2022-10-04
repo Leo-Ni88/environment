@@ -117,6 +117,8 @@ export PATH=$PATH:~/.local/bin/
 export ANYKA_TOOLCHAIN_PATH=/home/leo/workspace/gitlab/bl_iot_sdk/toolchain/riscv/Thead_riscv/Linux/
 # XServer display 
 # export DISPLAY=192.168.10.170:0.0
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 
 # use cross compile
 cross_compile() {
@@ -151,6 +153,10 @@ function picocom_start()
   sudo picocom -b $1  --raise-dtr --lower-rts --imap lfcrlf $2 -g /home/leo/workspace/log/picocom/`basename $2`_`date "+%Y_%m_%d_%H_%M_%S"`.log
 }
 
+alias bathelp='bat --plain --language=help'
+help() {
+    "$@" --help 2>&1 | bathelp
+}
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
