@@ -329,7 +329,7 @@ let g:Lf_IgnoreCurrentBufferName = 1
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
-let g:Lf_PreviewResult = {'Function': 1, 'BufTag': 0, 'File': 0, 'Buffer': 0, 'Mru': 0, 'Line': 0, 'Gtags': 1, 'Rg':0}
+let g:Lf_PreviewResult = {'Function': 1, 'BufTag': 0, 'File': 0, 'Buffer': 0, 'Mru': 0, 'Line': 0, 'Gtags': 1, 'Rg':1}
 let g:Lf_PopupPreviewPosition = 'top'
 
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.repo']
@@ -534,7 +534,7 @@ let g:startify_files_number = 15
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>tb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>hh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>ma <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
