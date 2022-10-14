@@ -172,7 +172,6 @@ alias grep="grep --color=auto"
 alias p='picocom_start'
 alias set_proxy='export ALL_PROXY=socks5://172.16.3.3:1081/'
 alias unset_proxy='unset ALL_PROXY'
-alias bat='batcat'
 alias l='exa -abghHl --icons'
 
 # POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
