@@ -704,7 +704,17 @@ lua <<EOF
   }
 
   -- nvim-telescope/telescope.nvim
-  require('telescope').setup{}
+  require('telescope').setup{
+    defaults = {
+      layout_strategy = "horizontal", -- center/horizontal ..
+      layout_config = {
+          height = 0.90,
+          width = 0.90,
+          mirror = false,
+          prompt_position = "bottom",
+      },
+    },
+  }
 EOF
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
