@@ -102,14 +102,14 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump zsh-autosuggestions zsh-syntax-highlighting fzf repo tig)
+plugins=(git gitfast autojump zsh-autosuggestions zsh-syntax-highlighting fzf repo tig docker)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export PATH=$PATH:~/.diff-so-fancy
 export PATH=$PATH:~/tools/bin/
-export PATH=$PATH:~/tools/llvm
+export PATH=$PATH:~/tools/llvm/bin
 #export PATH=$PATH:/home/leo/workspace/gitlab/bl602_harmony_os/device/bouffalo/bl602/bl_iot_sdk/toolchain/riscv/gcc_riscv32/bin/
 #export PATH=$PATH:/home/leo/workspace/gitlab/bl_iot_sdk/toolchain/riscv/Linux/bin/
 export PATH=$PATH:~/.local/bin/
