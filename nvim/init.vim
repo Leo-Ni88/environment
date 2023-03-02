@@ -15,42 +15,42 @@
 
 " plugins
 call plug#begin('~/.config/nvim/plugged')
+" nvim theme
 Plug 'sainnhe/sonokai'
+"Plug 'altercation/vim-colors-solarized'
+"Plug 'morhetz/gruvbox'
+
+"airline/bufferline and theme
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'rhysd/vim-clang-format'
+" Plug 'ntpeters/vim-better-whitespace'
 Plug 'Leo-Ni88/vim-uncrustify'
 Plug 'alpertuna/vim-header'
 Plug 'numToStr/Comment.nvim'
-Plug 'lfv89/vim-interestingwords'
+Plug 'dwrdx/mywords.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'p00f/nvim-ts-rainbow'
+Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'honza/vim-snippets'
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'jiangmiao/auto-pairs'
-Plug 'yamatsum/nvim-cursorline'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'mhinz/vim-startify'
-" Plug 'ap/vim-css-color'
-"Plug 'altercation/vim-colors-solarized'
-"Plug 'morhetz/gruvbox'
-"Plug 'ntpeters/vim-better-whitespace'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'machakann/vim-highlightedyank'
-"Plug 'octol/vim-cpp-enhanced-highlight'
 "Plug 'mhinz/vim-signify'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive'
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+Plug 'neovim/nvim-lspconfig'
+Plug 'ojroques/nvim-lspfuzzy'
 call plug#end()
 
 
@@ -119,9 +119,7 @@ set expandtab       " tabs are space
 set autoindent
 set copyindent      " copy indent from the previous line
 set whichwrap=b,s,h,l,<,>,[,]   " 左右移动可跨行
-
-" Clipboard 
-set clipboard+=unnamedplus
+set clipboard+=unnamedplus " Clipboard
 
 " UI Config
 set hidden
@@ -142,8 +140,9 @@ set scrolloff=12
 set updatetime=10            " for signify plug
 set nofsync
 "syntax on
+set undofile
+set undodir=~/.vim/undodir
 
-let g:cursorline_timeout = 10
 " let &colorcolumn="78"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -271,16 +270,11 @@ endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" lfv89/vim-interestingwords
-let g:interestingWordsGUIColors = ['#8CCBEA', '#A4E57E', '#FFDB72', '#FF7272', '#FFB3FF', '#9999FF']
-let g:interestingWordsTermColors = ['154', '121', '211', '137', '214', '222']
-let g:interestingWordsRandomiseColors = 1
+" mywords
+map <silent> <leader>h :lua require'mywords'.hl_toggle()<CR>
+map <silent> <leader>H :lua require'mywords'.uhl_all()<CR>
 
-nnoremap <silent> <leader>h :call InterestingWords('n')<cr>
-vnoremap <silent> <leader>h :call InterestingWords('v')<cr>
-nnoremap <silent> <leader>H :call UncolorAllWords()<cr>
-nnoremap <silent> n :call WordNavigation(1)<cr>
-nnoremap <silent> N :call WordNavigation(0)<cr>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " auto-pair
 let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
@@ -378,9 +372,11 @@ vmap <unique> <leader>ry <Plug>LeaderfRgVisualLiteralBoundary
 let g:Lf_GtagsAutoGenerate = 0
 let g:Lf_GtagsGutentags = 1
 let g:Lf_GtagsAutoUpdate = 1
+let g:Lf_GtagsSkipUnreadable = 1
 let g:Lf_GtagsSource = 1
 let g:Lf_Gtagsconf = '/usr/local/share/gtags/gtags.conf'
 let g:Lf_Gtagslabel = 'native-pygments'
+" let g:gutentags_trace = 1
 
 "LeaderF gtags
 noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
@@ -495,9 +491,6 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 " this setting may cause err
@@ -565,20 +558,6 @@ lua <<EOF
         -- colors = {}, -- table of hex strings
         -- termcolors = {} -- table of colour name strings
     },
-  }
-
-  -- nvim-cursorline
-  require('nvim-cursorline').setup {
-    cursorline = {
-      enable = true,
-      timeout = 1000,
-      number = false,
-    },
-    cursorword = {
-      enable = true,
-      min_length = 3,
-      hl = { underline = true },
-    }
   }
 
   -- nvim-web-devicons
@@ -724,6 +703,70 @@ lua <<EOF
       },
     },
   }
+
+-- ccls lsp-server
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+ 
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+ 
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'C', vim.lsp.buf.document_symbol, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+end
+ 
+-- vim.lsp.set_log_level 'debug'
+ 
+require'lspconfig'.clangd.setup {
+  on_attach = on_attach,
+  cmd = { 'clangd', '--log=verbose' },
+}
+ 
+-- lspfuzzy
+require('lspfuzzy').setup {
+  methods = 'all',         -- either 'all' or a list of LSP methods (see below)
+  jump_one = true,         -- jump immediately if there is only one location
+  save_last = false,       -- save last location results for the :LspFuzzyLast command
+  callback = nil,          -- callback called after jumping to a location
+  fzf_preview = {          -- arguments to the FZF '--preview-window' option
+    'right:+{2}-/2'          -- preview on the right and centered on entry
+  },
+  fzf_action = {               -- FZF actions
+    ['ctrl-t'] = 'tab split',  -- go to location in a new tab
+    ['ctrl-v'] = 'vsplit',     -- go to location in a vertical split
+    ['ctrl-x'] = 'split',      -- go to location in a horizontal split
+  },
+  fzf_modifier = ':~:.',   -- format FZF entries, see |filename-modifiers|
+  fzf_trim = true,         -- trim FZF entries
+}
 EOF
 
+autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
+autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
