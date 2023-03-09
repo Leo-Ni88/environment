@@ -45,7 +45,6 @@ Plug 'mhinz/vim-startify'
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'ojroques/nvim-lspfuzzy' " This plugin makes the Neovim LSP client use FZF to display results and navigate the code
 
 "Plug 'mhinz/vim-signify'
 Plug 'easymotion/vim-easymotion'
@@ -60,6 +59,7 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim'
 call plug#end()
 
 
@@ -710,43 +710,55 @@ lua <<EOF
       ensure_installed = { "clangd", "pyright" },
   }
 
+  local keymap = vim.keymap.set
+  -- LSP finder - Find the symbol's definition
+  keymap("n", "gr", "<cmd>Lspsaga lsp_finder<CR>")
+  -- Peek definition
+  keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
+  -- Go to definition
+  keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
+  keymap('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  -- Peek type definition
+  keymap("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
+  -- Go to type definition
+  keymap("n","gt", "<cmd>Lspsaga goto_type_definition<CR>")
+  -- Toggle outline
+  keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>")
+  -- Code action
+  keymap({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
+  -- Rename all occurrences of the hovered word for the entire file
+  keymap("n", "<leader>rn", "<cmd>Lspsaga rename<CR>")
+  -- Rename all occurrences of the hovered word for the selected files
+  keymap("n", "<leader>rn", "<cmd>Lspsaga rename ++project<CR>")
+  -- Call hierarchy
+  keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
+  keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
-  -- ccls lsp-server
-  -- Mappings.
-  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-  local opts = { noremap=true, silent=true }
-  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+  -- Hover Doc
+  keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+  -- If you want to keep the hover window in the top right hand corner,
+  keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
+  -- Floating terminal
+  keymap({"n", "t"}, "<Leader>T", "<cmd>Lspsaga term_toggle<CR>")
  
-  -- Use an on_attach function to only map the following keys
-  -- after the language server attaches to the current buffer
-  local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-   
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', 'C', vim.lsp.buf.document_symbol, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, bufopts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-  end
- 
+  -- Show line diagnostics
+  keymap("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
+  -- Show cursor diagnostics
+  keymap("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+  -- Show buffer diagnostics
+  keymap("n", "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
+  -- Diagnostic jump
+  keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+  keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+  -- Diagnostic jump with filters such as only jumping to an error
+  keymap("n", "[E", function()
+    require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+  end)
+  keymap("n", "]E", function()
+    require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+  end)
+  
+  
   -- vim.lsp.set_log_level 'debug'
   -- set up lsp servers 
   require'lspconfig'.clangd.setup {
@@ -758,8 +770,8 @@ lua <<EOF
     on_attach = on_attach,
   }
 
-  -- lspfuzzy
-  require('lspfuzzy').setup()
+  -- lspsaga
+  require("lspsaga").setup()
 EOF
 
 autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
