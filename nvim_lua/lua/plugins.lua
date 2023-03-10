@@ -196,6 +196,44 @@ packer.startup({
             end
         })
 
+        --Neoformat
+        use({ 'sbdchd/neoformat' })
+        use({
+            'mhartington/formatter.nvim',
+            configs = function()
+                require("configs.formatter")
+            end,
+        })
+
+        -- fidget
+	    use({
+	    	"j-hui/fidget.nvim",
+	    	config = function()
+	    		require("fidget").setup()
+	    	end,
+	    })
+
+        -- cmp: Autocomplete
+        use({
+            "hrsh7th/nvim-cmp",
+            event = "InsertEnter",
+            config = function()
+                require("configs.cmp")
+            end,
+        })
+        use("hrsh7th/cmp-nvim-lsp")
+        use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
+        use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
+
+        -- LSP diagnostics, code actions, and more via Lua.
+	    use({
+	    	"jose-elias-alvarez/null-ls.nvim",
+	    	config = function()
+	    		require("configs.null-ls")
+	    	end,
+	    	requires = { "nvim-lua/plenary.nvim" },
+	    })
+
         -- Automatically set up your configuration after cloning packer.nvim
         if packer_bootstrap then
             require('packer').sync()
