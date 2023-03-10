@@ -8,23 +8,49 @@ local o = vim.o
 
 -- Editor options
 
+o.tabstop = 4
+o.softtabstop = 4
+o.shiftwidth = 4
+o.expandtab = true
+o.autoindent = true
+--o.copyindent = true
+o.clipboard = "unnamedplus"
+
+o.hidden = true
 o.number = true
 o.relativenumber = true
-o.clipboard = "unnamedplus"
-o.syntax = "on"
-o.autoindent = true
+o.showcmd = true
 o.cursorline = true
-o.expandtab = true
-o.shiftwidth = 2
-o.tabstop = 2
+--o.cursorcolum = true
+--
+o.wildmenu = true
+o.showmatch = true
+--o.laststatus = 2
+--o.nobaskup = true
+--o.noswapfile = true
+o.wrap = false
+o.mouse = "a"
+--o.scrolloff = 12
+--o.updatetime = 10
+--o.nofsync = true
+--o.undofile = true
+o.undodir = '~/.vim/undodir'
+o.syntax = "on"
 o.encoding = "UTF-8"
 o.ruler = true
-o.mouse = "a"
 o.title = true
-o.hidden = true
 o.ttimeoutlen = 0
-o.wildmenu = true
-o.showcmd = true
-o.showmatch = true
 o.inccommand = "split"
-o.splitbelow = "splitright"
+-- o.splitbelow = 'splitright'
+
+o.autoread = true
+
+vim.cmd([[
+    if has("autocmd")
+        autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    endif
+
+    " autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
+    " autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+    " autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+]])
