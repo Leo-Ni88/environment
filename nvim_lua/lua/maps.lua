@@ -46,7 +46,7 @@ map("n", "gd", "<cmd>Lspsaga goto_definition<CR>") -- Go to definition
 map("n", "gD", vim.lsp.buf.declaration, bufopts) -- Go to declaration
 map("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>") -- Peek type definition
 map("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>") -- Go to type definition
-map("n", "<leader>o", "<cmd>Lspsaga outline<CR>") -- Toggle outline
+map("n", "go", "<cmd>Lspsaga outline<CR>") -- Toggle outline
 map({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>") -- Code action
 map("n", "<leader>rn", "<cmd>Lspsaga rename<CR>") -- Rename all occurrences of the hovered word for the entire file
 map("n", "<leader>rn", "<cmd>Lspsaga rename ++project<CR>") -- Rename all occurrences of the hovered word for the selected files
@@ -101,6 +101,11 @@ map("n", "<leader>H", "<CMD>lua require'mywords'.uhl_all()<CR>")
 -- NeoTree
 map("n", "<leader>e", "<CMD>Neotree toggle<CR>")
 map("n", "<leader>o", "<CMD>Neotree focus<CR>")
+
+-- nvim-tree
+map("n", "<leader>ee", "<CMD>NvimTreeToggle<CR>")
+map("n", "<leader>er", "<CMD>NvimTreeRefresh<CR>")
+map("n", "<leader>ef", "<CMD>NvimTreeFindFile<CR>")
 
 -- Terminal
 map("n", "<leader>th", "<CMD>ToggleTerm size=10 direction=horizontal<CR>")

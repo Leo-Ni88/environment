@@ -5,7 +5,7 @@ end
 
 transparent.setup({
     enable = true,
-    -- extra_group = {"all",},
+    -- extra_group = "all",
 	extra_groups = {
         "BufferlineBuffer",
         "BufferlineBufferSelected",
@@ -25,6 +25,14 @@ transparent.setup({
         "BufferLineTabClose",
         "BufferLineFill",
         "BufferLineGroupSeparator",
+        "OutlinePreviewNormal",
+        "SagaShadow",
+        "SagaCollapse",
+        "SagaBorder",
+        "SagaNormal",
+        "SagaExpand",
+        "SagaWinbarArray",
+        "SagaWinbarUnitNeoTreeFloatNormal",
 	},
 	exclude = {},
 })

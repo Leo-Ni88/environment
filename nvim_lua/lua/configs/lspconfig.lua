@@ -18,13 +18,18 @@ local on_attach = function(client, bufnr)
 	end
 end
 
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+capabilities.offsetEncoding = { "utf-16" }
+
 -- Python
 nvim_lsp.pyright.setup({
 	on_attach = on_attach,
+    capabilities = capabilities,
 })
 
 -- Clangd
 nvim_lsp.clangd.setup({
 	on_attach = on_attach,
+    capabilities = capabilities,
     cmd = { 'clangd', '--log=verbose' },
 })

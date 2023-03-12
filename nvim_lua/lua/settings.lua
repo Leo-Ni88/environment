@@ -50,7 +50,7 @@ vim.cmd([[
         autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
 
-    " autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
-    " autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-    " autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+    autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
+    autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+    autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
 ]])

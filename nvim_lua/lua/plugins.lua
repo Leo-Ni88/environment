@@ -101,15 +101,20 @@ packer.startup({
 
         -- Lspsaga
         use({
-          "glepnir/lspsaga.nvim",
-          branch = "main",
-          config = function()
-              require("configs.lspsaga")
-          end,
-          requires = {
-              {"nvim-tree/nvim-web-devicons"},
-              {"nvim-treesitter/nvim-treesitter"}
-          }
+            "glepnir/lspsaga.nvim",
+            branch = "main",
+            config = function()
+                require("configs.lspsaga")
+            end,
+            requires = {
+                {"nvim-tree/nvim-web-devicons"},
+                {"nvim-treesitter/nvim-treesitter"}
+            },
+            opts = {
+                window = {
+                    blend = 0,
+                }
+            },
         })
 
         -- lspkind
@@ -121,16 +126,17 @@ packer.startup({
 	    	tag = "v<CurrentMajor>.*",
 	    })
 
-	    -- File manager
-	    use({
-	    	"nvim-neo-tree/neo-tree.nvim",
-	    	branch = "v2.x",
-	    	requires = {
-	    		"nvim-lua/plenary.nvim",
-	    		"nvim-tree/nvim-web-devicons",
-	    		"MunifTanjim/nui.nvim",
-	    	},
-	    })
+	    -- Nvim-tree: File manager
+        use {
+            'nvim-tree/nvim-tree.lua',
+            requires = {
+              'nvim-tree/nvim-web-devicons', -- optional, for file icons
+            },
+            tag = 'nightly',
+	    	config = function()
+	    		require("configs.nvim-tree")
+	    	end,
+        }
 
 	    -- Show colors
 	    use({
@@ -140,7 +146,7 @@ packer.startup({
 	    	end,
 	    })
 
-	    -- Terminal
+	    -- Toggleterm: Terminal
 	    use({
 	    	"akinsho/toggleterm.nvim",
 	    	tag = "*",
