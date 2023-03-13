@@ -1,4 +1,5 @@
 local global = vim.g
+local opt = vim.opt
 local o = vim.o
 
 -- Map <leader> = the space key
@@ -22,7 +23,6 @@ o.relativenumber = true
 o.showcmd = true
 o.cursorline = true
 --o.cursorcolum = true
---
 o.wildmenu = true
 o.showmatch = true
 --o.laststatus = 2
@@ -33,17 +33,23 @@ o.mouse = "a"
 --o.scrolloff = 12
 --o.updatetime = 10
 --o.nofsync = true
---o.undofile = true
-o.undodir = '~/.vim/undodir'
+o.undofile = true
+o.undodir = "~/.vim/undodir"
 o.syntax = "on"
 o.encoding = "UTF-8"
 o.ruler = true
 o.title = true
 o.ttimeoutlen = 0
 o.inccommand = "split"
--- o.splitbelow = 'splitright'
-
+o.splitbelow = "splitright"
 o.autoread = true
+
+-- disable netrw at the very start of your init.lua (strongly advised by nvim-tree)
+global.loaded_netrw = 1
+global.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+opt.termguicolors = true
 
 vim.cmd([[
     if has("autocmd")
