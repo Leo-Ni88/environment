@@ -47,5 +47,8 @@ cp -r diff-so-fancy ~/.diff-so-fancy
 git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
 git config --global interactive.diffFilter "diff-so-fancy —patch"
 
-
-
+# install tmux plugins
+mkdir -p ~/.tmux/{plugins,resurrect}
+cd ~/.tmux/plugins
+git clone https://github.com/tmux-plugins/tmux-resurrect.git
+git clone https://github.com/tmux-plugins/tmux-continuum.git
