@@ -119,7 +119,8 @@ export ANYKA_TOOLCHAIN_PATH=/home/leo/workspace/gitlab/bl_iot_sdk/toolchain/risc
 # export DISPLAY=192.168.10.170:0.0
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
-
+export TTY=/dev/ttyACM0
+export DEVICE_SERIAL_NUMBER=/dev/ttyACM0
 # use cross compile
 cross_compile() {
   export ARCH=arm
