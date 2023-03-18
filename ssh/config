@@ -1,5 +1,5 @@
 Host thinkBook
-    HostName 192.168.10.78
+    HostName 192.168.10.179
     User leo
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
@@ -31,35 +31,42 @@ Host bouffalolabX11
 
 Host desktop_home
     HostName 180.168.20.2
-	  protocol 2
+	protocol 2
     User leo
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
 Host desktop_company
     HostName 180.168.20.3
-	  protocol 2
+	protocol 2
     User leo
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
 Host ali_ecs
     HostName 121.40.31.153
-	  protocol 2
+	protocol 2
     User root
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
 Host bwg_ecs
     HostName 104.238.148.61
-	  protocol 2
+	protocol 2
     User root
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
     
 Host openwrt
     HostName 180.168.20.128
-	  protocol 2
+	protocol 2
+    User root
+    ForwardAgent yes
+    RemoteForward 52698 127.0.0.1:52698
+
+Host esxi
+    HostName 180.168.1.5
+	protocol 2
     User root
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
