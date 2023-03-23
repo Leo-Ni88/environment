@@ -29,6 +29,12 @@ elif [ "$1" = 'hf' ];then
     BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl602_v6.5.4/boot2_isp_release.bin"
     PT_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/partition/partition_cfg_4M.toml"
     DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_40M.dts"
+elif [ "$1" = 'bl616_demo_wifi' ];then
+    CHIPNAME="bl616"
+    FIRMWARE_PATH="/home/leo/workspace/gitlab/bl_iot_sdk/customer_app/bl616_demo_wifi/build_out/bl616_demo_wifi.bin"
+    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl616_v6.5.4/boot2_isp_release.bin"
+    PT_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/partition/partition_cfg_4M.toml"
+    DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_auto.dts"
 else
     echo "No this project"
 fi
@@ -39,8 +45,10 @@ show_usage(){
     echo "Usage: BLDevCube <project> [-b <boot2 path>] [-B <baudrate>] [-c <chip name>] [-d <dts path>] [-f <firmware path>] [-p <PT path>] [-P <port>]"
 }
 
+
+confirm="no"
 # arg parse
-while getopts "b:B:c:d:f:p:P:" opt; do
+while getopts "b:B:c:d:f:p:P:y" opt; do
     case $opt in
         b)
             BOOT2_PATH="$OPTARG"
@@ -62,6 +70,9 @@ while getopts "b:B:c:d:f:p:P:" opt; do
             ;;
         P)
             PORT="$OPTARG"
+            ;;
+        y)
+            confirm="yes"
             ;;
         \?)
             echo "无效的选项: -$opt" >&2
@@ -86,19 +97,22 @@ echo "\033[32mport:             $PORT \033[0m"
 echo "\033[32mbaudrate:         $BAUDRATE \033[0m"
 
 # confirm config
-read -p "配置是否正确？(yes/no) " confirm
-case $confirm in
-    [yY] | yes | YES | Yes)
-        ;;
-    [nN] | no | NO | No)
-        exit 1
-        ;;
-    *)
-        echo "invalid input.Please input y/Y/yes/YES/Yes or n/N/no/NO/No"
-        exit 1
-        ;;
-esac
+if [ $confirm != yes ];then
+    read -p "配置是否正确？(yes/no) " confirm
+    case $confirm in
+        [yY] | yes | YES | Yes)
+            ;;
+        [nN] | no | NO | No)
+            exit 1
+            ;;
+        *)
+            echo "invalid input.Please input y/Y/yes/YES/Yes or n/N/no/NO/No"
+            exit 1
+            ;;
+    esac
+fi
 
 # flashing
 echo "\033[34mbflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE\033[0m"
 bflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE # ; RETCODE=$?
+exit 0
