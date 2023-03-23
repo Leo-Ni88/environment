@@ -1,0 +1,5 @@
+# !/bin/bash
+
+cd ~/workspace/github/clash
+./clash -d . >clash.log 2>1& &
+# ~/workspace/github/Clash/clash -d ~/workspace/github/Clash >~/workspace/github/Clash/clash.log 2>&1 &
