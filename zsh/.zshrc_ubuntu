@@ -7,22 +7,23 @@ fi
 
 # where proxy
 proxy_on () {
-  export http_proxy="http://180.168.20.55:7890"
-  export https_proxy="http://180.168.20.55:7890"
-  export ALL_PROXY="socks5h://180.168.20.55:7890"
-  echo "Proxy on:$ALL_PROXY"
-  
-  # export ALL_PROXY="socks5://172.16.3.3:1081/"
-  # export http_proxy="socks5://172.16.3.3:1081"
-  # export https_proxy="socks5://172.16.3.3:1081"
+    IP="127.0.0.1"
+    HTTPS_PORT="7890"
+    SOCKS_PORT="7891"
+    export http_proxy="http://$IP:$HTTPS_PORT"
+    export https_proxy="http://$IP:$HTTPS_PORT"
+    export ALL_PROXY="socks5h://$IP:$SOCKS_PORT"
+    echo "Proxy on:$http_proxy"
+    echo "Proxy on:$https_proxy"
+    echo "Proxy on:$ALL_PROXY"
 }
 
 # where noproxy
 proxy_off () {
-  unset http_proxy
-  unset https_proxy
-  unset ALL_PROXY
-  echo "Proxy off"
+    unset http_proxy
+    unset https_proxy
+    unset ALL_PROXY
+    echo "Proxy off"
 }
 
 # If you come from bash you might have to change your $PATH.
