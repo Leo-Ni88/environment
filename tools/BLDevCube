@@ -48,7 +48,7 @@ show_usage(){
 
 confirm="no"
 # arg parse
-while getopts "b:B:c:d:f:p:P:y" opt; do
+while getopts "b:B:c:d:ef:p:P:y" opt; do
     case $opt in
         b)
             BOOT2_PATH="$OPTARG"
@@ -61,6 +61,9 @@ while getopts "b:B:c:d:f:p:P:y" opt; do
             ;;
         d)
             DTS_PATH="$OPTARG"
+            ;;
+        e)
+            ERASE="--erase"
             ;;
         f)
             FIRMWARE_PATH="$OPTARG"
@@ -96,6 +99,12 @@ echo "\033[32mdts:              $DTS_PATH \033[0m"
 echo "\033[32mport:             $PORT \033[0m"
 echo "\033[32mbaudrate:         $BAUDRATE \033[0m"
 
+if [ "$ERASE" = "--erase" ]; then
+    echo "\033[32merase:            yes \033[0m"
+else
+    echo "\033[32merase:            no \033[0m"
+fi
+
 # confirm config
 if [ $confirm != yes ];then
     read -p "配置是否正确？(yes/no) " confirm
@@ -113,6 +122,6 @@ if [ $confirm != yes ];then
 fi
 
 # flashing
-echo "\033[34mbflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE\033[0m"
-bflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE # ; RETCODE=$?
+echo "\033[34mbflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE $ERASE\033[0m"
+bflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE $ERASE
 exit 0
