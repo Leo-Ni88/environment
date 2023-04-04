@@ -1,7 +1,7 @@
 # !/bin/bash
 
 if [ $# -lt 1 ]; then
-    echo "Usage: BLDevCube <project> [-b <boot2 path>] [-B <baudrate>] [-B <boot2 path>] [-c <chip name>] [-d <dts path>] [-f <firmware path>] [-p <PT path>] [-P <port>]"
+    echo "Usage: BLDevCube <project> [-b <boot2 path>] [-B <baudrate>] [-c <chip name>] [-d <dts path>] [-e] [-f <firmware path>] [-p <PT path>] [-P <port>]"
     exit 1
 fi
 
@@ -42,7 +42,7 @@ fi
 shift
 
 show_usage(){
-    echo "Usage: BLDevCube <project> [-b <boot2 path>] [-B <baudrate>] [-c <chip name>] [-d <dts path>] [-f <firmware path>] [-p <PT path>] [-P <port>]"
+    echo "Usage: BLDevCube <project> [-b <boot2 path>] [-B <baudrate>] [-c <chip name>] [-d <dts path>] [-e] [-f <firmware path>] [-p <PT path>] [-P <port>]"
 }
 
 

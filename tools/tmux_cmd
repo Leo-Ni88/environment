@@ -1,0 +1,18 @@
+#!/bin/bash
+SESSION="Amazon:1.3"
+
+send_cmd() {
+  tmux send-keys -t ${SESSION} "$1" Enter
+}
+
+
+for i in {1..10}
+do
+    # send_cmd "ace mw logging cli log 0 5 filter_test the example MAC address on wikipedia is 12:34:56:78:9A:BC"
+    # send_cmd "python local_runner.py --m \"ACE_DTS_Optional_Privacyfilter_System\" --nobuild --noflash"
+    # send_cmd "kvs set test_key$i 123456780000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    # send_cmd "python local_runner.py --m \"ACE_DTS_EntryDs_Integration\" --nobuild --noflash"
+    send_cmd "python local_runner.py --m \"ACE_DTS_DHA_Integration\" --nobuild --noflash"
+    sleep 20
+done
+
