@@ -16,3 +16,6 @@
 [submodule "nvim-packer"]
 	path = nvim-packer
 	url = git@github.com:Leo-Ni88/nvim-packer.git
+[submodule "nvim-lazy"]
+	path = nvim-lazy
+	url = git@github.com:Leo-Ni88/nvim.lazy.git
