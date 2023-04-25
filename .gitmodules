@@ -19,3 +19,6 @@
 [submodule "nvim-lazy"]
 	path = nvim-lazy
 	url = git@github.com:Leo-Ni88/nvim.lazy.git
+[submodule "lazynvim"]
+	path = lazynvim
+	url = git@github.com:Leo-Ni88/lazynvim.git
