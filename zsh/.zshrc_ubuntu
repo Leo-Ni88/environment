@@ -7,7 +7,9 @@ fi
 
 # where proxy
 proxy_on () {
-    IP="127.0.0.1"
+    # IP="127.0.0.1"
+    IP="180.168.20.55"
+    # IP="192.168.10.179"
     HTTPS_PORT="7890"
     SOCKS_PORT="7891"
     export http_proxy="http://$IP:$HTTPS_PORT"
@@ -167,14 +169,15 @@ help() {
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias l='exa -abghHl --icons'
 alias ll='ls -alhF'
 alias vim='nvim'
-alias vi='nvim'
+alias vi='nvim --noplugin'
+alias gui='gitui'
 alias grep="grep --color=auto"
 alias p='picocom_start'
 alias set_proxy='export ALL_PROXY=socks5://172.16.3.3:1081/'
 alias unset_proxy='unset ALL_PROXY'
-alias l='exa -abghHl --icons'
 
 # POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
