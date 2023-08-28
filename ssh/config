@@ -1,11 +1,17 @@
 Host thinkBook
-    HostName 192.168.10.179
+    HostName 192.168.10.78
     User leo
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
 Host thinkBookTinc
     HostName 180.168.20.135
+    User leo
+    ForwardAgent yes
+    RemoteForward 52698 127.0.0.1:52698
+
+Host ace_ubuntu
+    HostName 180.168.20.153
     User leo
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
