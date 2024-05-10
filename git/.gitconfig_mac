@@ -33,8 +33,9 @@
 	ui = auto
 [oh-my-zsh]
 	hide-status = 1
-
-
-
 [init]
 	defaultBranch = master
+[url "ssh://gerrit.odm.mioffice.cn:29418/"]
+  pushinsteadOf = ssh://git.odm.mioffice.cn:29418/
+  pushinsteadOf = ssh://p-nijie3@git.odm.mioffice.cn:29418/
+  configFlag = success
