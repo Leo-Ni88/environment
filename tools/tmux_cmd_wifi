@@ -1,0 +1,13 @@
+#!/bin/bash
+SESSION="Mi:1.2"
+
+send_cmd() {
+    echo "$1"
+	tmux send-keys -t ${SESSION} "$1" Enter
+}
+
+while true
+do
+    send_cmd "reboot"
+    sleep 60
+done

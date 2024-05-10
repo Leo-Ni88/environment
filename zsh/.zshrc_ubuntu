@@ -7,24 +7,20 @@ fi
 
 # where proxy
 proxy_on () {
-    # IP="127.0.0.1"
-    IP="180.168.20.55"
-    # IP="192.168.10.179"
-    HTTPS_PORT="7890"
-    SOCKS_PORT="7891"
-    export http_proxy="http://$IP:$HTTPS_PORT"
-    export https_proxy="http://$IP:$HTTPS_PORT"
-    export ALL_PROXY="socks5h://$IP:$SOCKS_PORT"
-    echo "Proxy on:$http_proxy"
-    echo "Proxy on:$https_proxy"
-    echo "Proxy on:$ALL_PROXY"
+    export http_proxy=http://${1}:${2}
+    export https_proxy=http://${1}:${2} 
+    export all_proxy=socks5://${1}:${2}
+    echo "proxy_on:"
+    echo "http_proxy=$http_proxy"
+    echo "https_proxy=$https_proxy"
+    echo "all_proxy=$all_proxy"
 }
 
 # where noproxy
 proxy_off () {
     unset http_proxy
     unset https_proxy
-    unset ALL_PROXY
+    unset all_proxy
     echo "Proxy off"
 }
 
@@ -110,9 +106,10 @@ plugins=(git gitfast autojump zsh-autosuggestions zsh-syntax-highlighting fzf re
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/.diff-so-fancy
 export PATH=$PATH:~/tools/bin/
-export PATH=$PATH:/home/leo/workspace/tools/llvm/bin
+export PATH=/home/leo/workspace/tools/llvm:$PATH
 #export PATH=$PATH:/home/leo/workspace/gitlab/bl602_harmony_os/device/bouffalo/bl602/bl_iot_sdk/toolchain/riscv/gcc_riscv32/bin/
 #export PATH=$PATH:/home/leo/workspace/gitlab/bl_iot_sdk/toolchain/riscv/Linux/bin/
 export PATH=$PATH:~/.local/bin/
@@ -124,6 +121,14 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 export TTY=/dev/ttyACM0
 export DEVICE_SERIAL_NUMBER=/dev/ttyACM0
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+# export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'
+
+acs_serial() {
+    export TTY=${1}
+    export DEVICE_SERIAL_NUMBER=${1}
+}
+
 # use cross compile
 cross_compile() {
   export ARCH=arm
@@ -152,9 +157,18 @@ export LANG=en_US.UTF-8
 # export ARCHFLAGS="-arch x86_64"
 
 # function
-function picocom_start()
+function pcom()
 {
-  sudo picocom -b $1  --raise-dtr --lower-rts --imap lfcrlf $2 -g /home/leo/workspace/log/picocom/`basename $2`_`date "+%Y_%m_%d_%H_%M_%S"`.log
+    if [[ $3 == "-g" ]]; then
+        picocom -b $1 --raise-dtr --lower-rts --imap lfcrlf $2 -g /home/leo/workspace/log/picocom/`basename $2`_`date "+%Y_%m_%d_%H_%M_%S"`.log
+    else
+        picocom -b $1 --raise-dtr --lower-rts --imap lfcrlf $2
+    fi
+}
+
+function pcomg()
+{
+    picocom -b $1 --raise-dtr --lower-rts --imap lfcrlf $2 -g /home/leo/workspace/log/picocom/`basename $2`_`date "+%Y_%m_%d_%H_%M_%S"`.log
 }
 
 alias bathelp='bat --plain --language=help'
@@ -176,8 +190,10 @@ alias vi='nvim --noplugin'
 alias gui='gitui'
 alias grep="grep --color=auto"
 alias p='picocom_start'
-alias set_proxy='export ALL_PROXY=socks5://172.16.3.3:1081/'
-alias unset_proxy='unset ALL_PROXY'
+alias bt='bat'
+alias btp='bat -p'
+alias tsp='tspin'
+alias dmesg='dmesg -T'
 
 # POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 

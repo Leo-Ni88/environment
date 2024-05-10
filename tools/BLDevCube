@@ -1,7 +1,7 @@
 # !/bin/bash
 
 if [ $# -lt 1 ]; then
-    echo "Usage: BLDevCube <project> [-b <boot2 path>] [-B <baudrate>] [-c <chip name>] [-d <dts path>] [-e] [-f <firmware path>] [-p <PT path>] [-P <port>]"
+    echo "Usage: BLDevCube <project> [-b <boot2 path>] [-B <baudrate>] [-c <chip name>] [-d <dts path>] [-e] [-f <firmware path>] [-h help] [-p <PT path>] [-s <single download>] [-P <port>]"
     exit 1
 fi
 
@@ -10,41 +10,54 @@ PORT="/dev/ttyACM0"
 BAUDRATE="2000000"
 EXEC_PATH=$(readlink -f ~/tools/bin/bflb_iot_tool)
 DEVCUBE_PATH=$(dirname $EXEC_PATH)
+SINGLE_DOWNLOAD_FILE=$DEVCUBE_PATH/flash.bin
 
-if [ "$1" = "acs" ];then
+if [ "$1" = "ACS" ];then
     CHIPNAME="bl616"
     # FIRMWARE_PATH="/home/leo/workspace/gitlab/ACS/iot_sdk/out/baseproj/shsdk/bouffalolab/wrover/riscv64-unknown-elf/userdebug/images/app/baseproj-shsdk.bin"
     FIRMWARE_PATH="/home/leo/workspace/code/ace/BL618_RB26/out/baseproj/shsdk/bouffalolab/wrover/riscv64-unknown-elf/userdebug/images/app/baseproj-shsdk.bin"
     BOOT2_PATH="/home/leo/workspace/code/ace/BL618_RB26/platform/bouffalolab/tools/flash_tool/baseproj_bootloader.bin"
     PT_PATH="/home/leo/workspace/code/ace/BL618_RB26/platform/bouffalolab/tools/flash_tool/part_8M.toml"
     DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_auto.dts"
+elif [ "$1" = 'FFS' ];then
+    CHIPNAME="bl616"
+    FIRMWARE_PATH="/home/leo/workspace/code/ace/acs_rtos_reference_ffs/iot_sdk/customer_app/bl616_demo_event/build_out/bl616_demo_event.bin"
+    BOOT2_PATH="/home/leo/workspace/code/ace/BL618_RB26/platform/bouffalolab/tools/flash_tool/baseproj_bootloader.bin"
+    PT_PATH="/home/leo/workspace/code/ace/BL618_RB26/platform/bouffalolab/tools/flash_tool/part_4M.toml"
+    DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_auto.dts"
+elif [ "$1" = 'DPK' ];then
+    CHIPNAME="bl616"
+    FIRMWARE_PATH="/home/leo/workspace/code/ace/BL618_RB26/out/baseproj/shsdk/bouffalolab/bl616/riscv64-unknown-elf/userdebug/images/app/baseproj-shsdk.bin"
+    BOOT2_PATH="/home/leo/Desktop/flash_tool/baseproj_bootloader.bin"
+    PT_PATH="/home/leo/Desktop/flash_tool/part_4M.toml"
+    DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_auto.dts"
 elif [ "$1" = 'ozt' ];then
     CHIPNAME="bl602"
     FIRMWARE_PATH="/home/leo/workspace/gitlab/OHOS/BL602_HarmonyOS_LTS_1.1.0/out/bl602/bl602_wifiModule/turbox_openHarmony.bin"
-    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl602_v6.5.4/boot2_isp_release.bin"
+    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl602_v6.5.7/boot2_isp_release.bin"
     PT_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/partition/partition_cfg_4M.toml"
     DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_40M.dts"
 elif [ "$1" = 'hf' ];then
     CHIPNAME="bl602"
     FIRMWARE_PATH="/home/leo/workspace/gitlab/bl602_harmony_os/out/bl602/bl602_wifiModule/turbox_openHarmony.bin"
-    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl602_v6.5.4/boot2_isp_release.bin"
+    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl602_v6.5.7/boot2_isp_release.bin"
     PT_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/partition/partition_cfg_4M.toml"
     DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_40M.dts"
 elif [ "$1" = 'bl602' ];then
     CHIPNAME="bl602"
-    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl602_v6.5.4/boot2_isp_release.bin"
+    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl602_v6.5.7/boot2_isp_release.bin"
     PT_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/partition/partition_cfg_4M.toml"
     DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_40M.dts"
 elif [ "$1" = 'bl616' ];then
     CHIPNAME="bl616"
     FIRMWARE_PATH="/home/leo/workspace/gitlab/bl_iot_sdk/customer_app/bl616_demo_wifi/build_out/bl616_demo_wifi.bin"
-    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl616_v6.5.4/boot2_isp_release.bin"
+    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl616_v6.5.7/boot2_isp_release.bin"
     PT_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/partition/partition_cfg_4M.toml"
     DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_auto.dts"
 elif [ "$1" = 'bl702' ];then
     CHIPNAME="bl702"
     FIRMWARE_PATH="/home/leo/workspace/gitlab/bl_iot_sdk/customer_app/sdk_app_throughput/bl702_master/build_out/demo_master.bin"
-    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl702_v6.5.4/boot2_isp_release.bin"
+    BOOT2_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/builtin_imgs/boot2_isp_bl702_v6.5.7/boot2_isp_release.bin"
     PT_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/partition/partition_cfg_2M_boot2_iap.toml"
     DTS_PATH="$DEVCUBE_PATH/chips/$CHIPNAME/device_tree/bl_factory_params_IoTKitA_32M.dts"
 else
@@ -54,13 +67,15 @@ fi
 shift
 
 show_usage(){
-    echo "Usage: BLDevCube <project> [-b <boot2 path>] [-B <baudrate>] [-c <chip name>] [-d <dts path>] [-e] [-f <firmware path>] [-p <PT path>] [-P <port>]"
+    echo "Usage: BLDevCube <project> [-b <boot2 path>] [-B <baudrate>] [-c <chip name>] [-d <dts path>] [-e] [-f <firmware path>] [-h help] [-p <PT path>] [-s <single download>] [-P <port>]"
 }
 
 
 confirm="no"
+quite="no"
+single_dwn="no"
 # arg parse
-while getopts "b:B:c:d:ef:p:P:y" opt; do
+while getopts "b:B:c:d:ef:hp:P:qsy" opt; do
     case $opt in
         b)
             BOOT2_PATH="$OPTARG"
@@ -80,22 +95,33 @@ while getopts "b:B:c:d:ef:p:P:y" opt; do
         f)
             FIRMWARE_PATH="$OPTARG"
             ;;
+        h)
+            show_usage
+            exit 1
+            ;;
         p)
             PT_PATH="$OPTARG"
             ;;
         P)
             PORT="$OPTARG"
             ;;
+        q)
+            quite="yes"
+            ;;
+        s)
+            # SINGLE_DOWNLOAD_FILE="OPTARG"
+            single_dwn="yes"
+            ;;
         y)
             confirm="yes"
             ;;
         \?)
-            echo "无效的选项: -$opt" >&2
+            # echo "无效的选项: -$opt" >&2
             show_usage
             exit 1
             ;;
         :)
-            echo "选项 -$opt 需要参数" >&2
+            # echo "选项 -$opt 需要参数" >&2
             show_usage
             exit 1
             ;;
@@ -135,5 +161,17 @@ fi
 
 # flashing
 echo "\033[34mbflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE $ERASE\033[0m"
-bflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE $ERASE
+if [ $quite != yes ];then
+    if [ $single_dwn != yes ];then
+        bflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE $ERASE
+    else
+        bflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE $ERASE --single $SINGLE_DOWNLOAD_FILE
+    fi
+else
+    if [ $single_dwn != yes ];then
+        bflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE $ERASE >/dev/null
+    else
+        bflb_iot_tool --chipname $CHIPNAME --firmware $FIRMWARE_PATH --boot2 $BOOT2_PATH --pt $PT_PATH --dts $DTS_PATH --port $PORT --baudrate $BAUDRATE $ERASE --single $SINGLE_DOWNLOAD_FILE >/dev/null 
+    fi
+fi
 exit 0

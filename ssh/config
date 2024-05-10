@@ -1,51 +1,58 @@
+Host thinkBookWireless
+    HostName 192.168.10.135
+    User leo
+    ForwardX11 yes
+    ForwardAgent yes
+    RemoteForward 52698 127.0.0.1:52698
+
 Host thinkBook
     HostName 192.168.10.78
     User leo
+    ForwardX11 yes
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
 Host thinkBookTinc
     HostName 180.168.20.135
     User leo
+    ForwardX11 yes
+    ForwardAgent yes
+    RemoteForward 52698 127.0.0.1:52698
+
+Host macBookAirTinc
+    HostName 180.168.20.55
+    User nijie
+    ForwardX11 yes
+    ForwardAgent yes
+    RemoteForward 52698 127.0.0.1:52698
+
+Host macBookProTinc
+    HostName 180.168.20.5
+    User nijie
+    ForwardX11 yes
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
 Host ace_ubuntu
     HostName 180.168.20.153
     User leo
-    ForwardAgent yes
-    RemoteForward 52698 127.0.0.1:52698
-
-Host macbookair
-    HostName 180.168.20.55
-    User nijie
-    ForwardAgent yes
-    RemoteForward 52698 127.0.0.1:52698
-
-Host macbookpro
-    HostName 180.168.20.5
-    User nijie
-    ForwardAgent yes
-    RemoteForward 52698 127.0.0.1:52698
-
-Host bouffalolabX11
-    HostName 192.168.10.78
-    User leo
-    Protocol 2
     ForwardX11 yes
     ForwardAgent yes
+    RemoteForward 52698 127.0.0.1:52698
 
 Host desktop_home
     HostName 180.168.20.2
 	protocol 2
     User leo
+    ForwardX11 yes
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
-Host desktop_company
-    HostName 180.168.20.3
+Host ali_cloud
+    HostName 47.99.40.115
 	protocol 2
-    User leo
+    User root
+    ForwardX11 yes
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
@@ -53,6 +60,7 @@ Host ali_ecs
     HostName 121.40.31.153
 	protocol 2
     User root
+    ForwardX11 yes
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
@@ -60,19 +68,111 @@ Host bwg_ecs
     HostName 104.238.148.61
 	protocol 2
     User root
+    ForwardX11 yes
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
-    
+
 Host openwrt
     HostName 180.168.20.128
 	protocol 2
     User root
+    ForwardX11 yes
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
 
-Host esxi
-    HostName 180.168.1.5
+Host virusv
+    HostName 10.28.30.35
 	protocol 2
-    User root
+    User virusv
+    ForwardX11 yes
     ForwardAgent yes
     RemoteForward 52698 127.0.0.1:52698
+
+Host virusv-vm
+    HostName 10.28.30.35
+    Port 1223
+	protocol 2
+    User virusv
+    ForwardX11 yes
+    ForwardAgent yes
+    RemoteForward 52698 127.0.0.1:52698
+
+Host compiler
+    HostName 10.28.10.106 
+	protocol 2
+    User bl
+    ForwardX11 yes
+    ForwardAgent yes
+    ServerAliveInterval 60
+    RemoteForward 52698 127.0.0.1:52698
+
+Host bh6bao-compiler
+    HostName 10.28.30.24
+	protocol 2
+    User bh6bao
+    ForwardX11 yes
+    ForwardAgent yes
+    ServerAliveInterval 60
+    RemoteForward 52698 127.0.0.1:52698
+
+Host virusv-router
+    HostName 10.28.30.96
+	protocol 2
+    User virusv
+    ForwardX11 yes
+    ForwardAgent yes
+    ServerAliveInterval 60
+    RemoteForward 52698 127.0.0.1:52698
+
+Host gerrit-server
+    HostName 10.28.10.100
+	protocol 2
+    User root
+    ForwardX11 yes
+    ForwardAgent yes
+    ServerAliveInterval 60
+    RemoteForward 52698 127.0.0.1:52698
+
+Host jenkins-server
+    HostName 10.28.10.101
+	protocol 2
+    User jenkins
+    ForwardX11 yes
+    ForwardAgent yes
+    ServerAliveInterval 60
+    RemoteForward 52698 127.0.0.1:52698
+
+Host test
+    HostName 10.28.30.211
+	protocol 2
+    User test
+    ForwardX11 yes
+    ForwardAgent yes
+    ServerAliveInterval 60
+    RemoteForward 52698 127.0.0.1:52698
+
+Host auto_test
+    HostName 10.28.30.119
+	protocol 2
+    User ci
+    ForwardX11 yes
+    ForwardAgent yes
+    ServerAliveInterval 60
+    RemoteForward 52698 127.0.0.1:52698
+
+Host test-tinc
+    HostName 180.168.20.179
+	protocol 2
+    User test
+    ForwardX11 yes
+    ForwardAgent yes
+    ServerAliveInterval 60
+    RemoteForward 52698 127.0.0.1:52698
+
+Host partner-gerrit.mioffice.cn
+    HostName partner-gerrit.mioffice.cn
+    User p-nijie3
+ 
+Host gerrit.bouffalolab.com
+    HostName gerrit.bouffalolab.com
+    User jni

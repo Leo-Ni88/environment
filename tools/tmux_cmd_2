@@ -1,0 +1,65 @@
+#!/bin/bash
+SESSION="Amazon:1.3"
+times=$1
+
+send_cmd() {
+    echo "$1"
+	tmux send-keys -t ${SESSION} "$1" Enter
+}
+
+send_enter() {
+	tmux send-keys -t ${SESSION} Enter
+    sleep 0.5
+	tmux send-keys -t ${SESSION} Enter
+    sleep 0.5
+	tmux send-keys -t ${SESSION} Enter
+    sleep 0.5
+}
+
+for i in $(seq 1 $times); do
+	echo "The $i times test ..."
+
+    send_enter
+    send_cmd "ace mw wifi add_network ssid=ASUS_AX56U psk=01234567890"
+    sleep 2
+
+    send_enter
+    send_cmd "ace mw wifi connect ASUS_AX56U"
+	sleep 30
+
+    send_enter
+	send_cmd "ace hal wifi disconnect"
+	sleep 3
+
+    send_enter
+	send_cmd "ace mw wifi disconnect"
+	sleep 3
+
+    send_enter
+	send_cmd "ace hal wifi remove_network ASUS_AX56U"
+	sleep 3
+
+    send_enter
+    send_cmd "ace mw wifi add_network ssid=ASUS_AX56U psk=0123456789"
+    sleep 2
+
+    send_enter
+    send_cmd "ace mw wifi connect ASUS_AX56U"
+	sleep 30
+
+    send_enter
+	send_cmd "ace hal wifi disconnect"
+	sleep 3
+
+    send_enter
+	send_cmd "ace mw wifi disconnect"
+	sleep 3
+
+    send_enter
+	send_cmd "ace hal wifi remove_network ASUS_AX56U"
+	sleep 3
+done
+
+send_enter
+send_cmd "reboot"
+sleep 10
